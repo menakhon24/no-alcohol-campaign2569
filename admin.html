@@ -5,16 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - งดเหล้าเข้าพรรษา 2569</title>
 
-  <!-- ฟอนต์สารบรรณ (Sarabun) -->
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- SweetAlert2 -->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
-
-  <!-- Chart.js สำหรับสร้างกราฟ -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
@@ -31,10 +24,9 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      display: none; /* ซ่อนไว้ก่อนจนกว่าจะล็อกอินผ่าน */
+      display: none;
     }
 
-    /* --- Navbar --- */
     .navbar {
       background-color: var(--primary);
       color: white;
@@ -53,7 +45,6 @@
 
     .container { padding: 30px; max-width: 1400px; margin: 0 auto; }
 
-    /* --- Dashboard Cards --- */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -68,7 +59,6 @@
     .card-title { font-size: 1.1rem; font-weight: 600; color: #555; margin-bottom: 15px; text-align: center;}
     .chart-container { position: relative; height: 250px; width: 100%; }
 
-    /* --- Data Table --- */
     .table-container {
       background: white; border-radius: 10px; padding: 20px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
@@ -98,7 +88,6 @@
     .badge-in { background-color: #e3f2fd; color: #1976d2; }
     .badge-out { background-color: #fce4ec; color: #c2185b; }
 
-    /* SweetAlert Edit Modal Custom */
     .swal2-input, .swal2-select { font-family: 'Sarabun'; font-size: 1rem !important; }
   </style>
 </head>
@@ -107,14 +96,13 @@
   <div class="navbar">
     <h1><i class="fa-solid fa-shield-halved"></i> ระบบจัดการหลังบ้าน - งดเหล้าเข้าพรรษา 2569</h1>
     <div class="navbar-right">
-      <span id="adminName">Admin สพป.สร.3</span>
+      <span>Admin สพป.สร.3</span>
       <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
     </div>
   </div>
 
   <div class="container">
     
-    <!-- สถิติแบบกราฟ -->
     <div class="dashboard-grid">
       <div class="card">
         <div class="card-title">สัดส่วนผู้เข้าร่วม (เพศ)</div>
@@ -130,7 +118,6 @@
       </div>
     </div>
 
-    <!-- ตารางข้อมูล -->
     <div class="table-container">
       <div class="table-header">
         <h2 style="margin: 0; color: var(--primary);">รายชื่อผู้ตั้งสัจจะอธิษฐาน</h2>
@@ -151,7 +138,6 @@
             </tr>
           </thead>
           <tbody id="tableBody">
-            <!-- ข้อมูลจะถูกดึงมาใส่ตรงนี้ -->
           </tbody>
         </table>
       </div>
@@ -159,7 +145,6 @@
 
   </div>
 
-  <!-- นำเข้า SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
@@ -170,13 +155,10 @@
 
     let adminPin = "";
     let globalData = [];
-    let charts = {}; // เก็บ object กราฟเพื่อทำลายก่อนวาดใหม่
+    let charts = {}; 
 
-    // ==========================================
-    // 2. ระบบ Login เมื่อเปิดหน้าเว็บ
-    // ==========================================
     window.onload = async function() {
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+      if(!SCRIPT_URL || SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
         Swal.fire('ข้อผิดพลาด', 'กรุณานำ URL ของ Web App มาใส่ในไฟล์ admin.html ก่อน', 'error');
         return;
       }
@@ -204,14 +186,14 @@
 
           if (result.status === "success") {
             adminPin = pin;
-            globalData = result.data; // เก็บข้อมูลไว้ใช้
-            document.body.style.display = 'block'; // แสดงหน้าเว็บ
+            globalData = result.data; 
+            document.body.style.display = 'block'; 
             Swal.close();
             
             renderDashboard();
             renderTable();
           } else {
-            Swal.fire('รหัสไม่ถูกต้อง', result.message, 'error').then(() => { authenticate(); });
+            Swal.fire('รหัสไม่ถูกต้อง', result.message || 'รหัสผ่านผิด', 'error').then(() => { authenticate(); });
           }
         } catch (error) {
           Swal.fire('ผิดพลาด', 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้', 'error').then(() => { authenticate(); });
@@ -225,31 +207,23 @@
       authenticate();
     }
 
-    // ==========================================
-    // 3. ระบบแสดงผลกราฟสถิติ (Chart.js)
-    // ==========================================
     function renderDashboard() {
-      // นับข้อมูล
       let genderCount = { "ชาย": 0, "หญิง": 0, "ไม่ระบุ": 0 };
       let orgCount = { "สพป.สร.3": 0, "อื่นๆ": 0 };
       let satCount = { "มากที่สุด": 0, "มาก": 0, "ปานกลาง": 0, "น้อย": 0 };
 
       globalData.forEach(item => {
-        // นับเพศ
         if (genderCount[item.gender] !== undefined) genderCount[item.gender]++;
         else genderCount["ไม่ระบุ"]++;
 
-        // นับสังกัด (เช็คจาก String)
-        if (item.organization.includes("[สพป.สุรินทร์ เขต 3]")) orgCount["สพป.สร.3"]++;
+        if (String(item.organization).includes("[สพป.สุรินทร์ เขต 3]")) orgCount["สพป.สร.3"]++;
         else orgCount["อื่นๆ"]++;
 
-        // นับความพึงพอใจ
         if (satCount[item.satisfaction] !== undefined) satCount[item.satisfaction]++;
       });
 
-      // ฟังก์ชันช่วยวาดกราฟ
       const drawChart = (ctxId, type, labels, dataArr, colors) => {
-        if(charts[ctxId]) charts[ctxId].destroy(); // เคลียร์กราฟเก่า
+        if(charts[ctxId]) charts[ctxId].destroy(); 
         const ctx = document.getElementById(ctxId).getContext('2d');
         charts[ctxId] = new Chart(ctx, {
           type: type,
@@ -264,26 +238,21 @@
         });
       };
 
-      // วาดกราฟทั้ง 3 อัน
       drawChart('genderChart', 'pie', ['ชาย', 'หญิง', 'ไม่ระบุ'], [genderCount['ชาย'], genderCount['หญิง'], genderCount['ไม่ระบุ']], ['#3498db', '#e74c3c', '#bdc3c7']);
       drawChart('orgChart', 'doughnut', ['สพป.สุรินทร์ เขต 3', 'หน่วยงานอื่นๆ'], [orgCount['สพป.สร.3'], orgCount['อื่นๆ']], ['#2ecc71', '#f1c40f']);
       drawChart('satChart', 'bar', ['มากที่สุด', 'มาก', 'ปานกลาง', 'น้อย'], [satCount['มากที่สุด'], satCount['มาก'], satCount['ปานกลาง'], satCount['น้อย']], ['#9b59b6', '#3498db', '#f1c40f', '#e74c3c']);
     }
 
-    // ==========================================
-    // 4. ระบบตารางแสดงข้อมูล
-    // ==========================================
     function renderTable() {
       const tbody = document.getElementById('tableBody');
       tbody.innerHTML = "";
 
       globalData.forEach((item, index) => {
-        const orgBadge = item.organization.includes("[สพป.สุรินทร์ เขต 3]") 
+        const orgBadge = String(item.organization).includes("[สพป.สุรินทร์ เขต 3]") 
           ? `<span class="badge badge-in">สพป.สร.3</span>` 
           : `<span class="badge badge-out">อื่นๆ</span>`;
           
-        // ตัด tag ออกเพื่อโชว์แค่ชื่อโรงเรียนในตารางให้ดูสะอาดตา
-        const cleanOrg = item.organization.replace(/\[.*?\]\s*/g, '');
+        const cleanOrg = String(item.organization).replace(/\[.*?\]\s*/g, '');
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -292,14 +261,13 @@
           <td>${item.phone}</td>
           <td>${item.position}</td>
           <td>${orgBadge} ${cleanOrg}</td>
-          <td>${item.duration.split('(')[0]}</td>
+          <td>${String(item.duration).split('(')[0]}</td>
           <td><button class="btn-edit" onclick="editRow(${index})"><i class="fa-solid fa-pen"></i> แก้ไข</button></td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    // ฟังก์ชันช่องค้นหาในตาราง
     function filterTable() {
       const input = document.getElementById('searchInput').value.toLowerCase();
       const trs = document.getElementById('tableBody').getElementsByTagName('tr');
@@ -309,9 +277,6 @@
       }
     }
 
-    // ==========================================
-    // 5. ระบบแก้ไขข้อมูลรายบุคคล
-    // ==========================================
     async function editRow(index) {
       const item = globalData[index];
       
@@ -325,13 +290,13 @@
             <label style="margin-top:15px; display:block;">ชื่อ-สกุล</label>
             <input id="swal-name" class="swal2-input" value="${item.name}" style="width:90%; margin-top:5px;">
             
-            <label style="margin-top:15px; display:block;">เบอร์โทรศัพท์ (ห้ามซ้ำกับคนอื่น)</label>
+            <label style="margin-top:15px; display:block;">เบอร์โทรศัพท์</label>
             <input id="swal-phone" type="tel" class="swal2-input" value="${item.phone}" style="width:90%; margin-top:5px;">
             
             <label style="margin-top:15px; display:block;">ตำแหน่ง</label>
             <input id="swal-position" class="swal2-input" value="${item.position}" style="width:90%; margin-top:5px;">
             
-            <label style="margin-top:15px; display:block;">สังกัด/โรงเรียน (ห้ามลบวงเล็บ [ ])</label>
+            <label style="margin-top:15px; display:block;">สังกัด/โรงเรียน</label>
             <input id="swal-org" class="swal2-input" value="${item.organization}" style="width:90%; margin-top:5px;">
           </div>
         `,
@@ -341,7 +306,7 @@
         cancelButtonText: 'ยกเลิก',
         preConfirm: () => {
           return {
-            row: item.row, // ส่งเลขแถวกลับไปให้ Apps Script รู้ว่าต้องแก้บรรทัดไหน
+            row: item.row,
             prefix: document.getElementById('swal-prefix').value,
             name: document.getElementById('swal-name').value,
             phone: document.getElementById('swal-phone').value,
@@ -355,7 +320,6 @@
         Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
         
         try {
-          // รวม action และ pin เข้าไปใน data ก่อนส่ง POST
           const payload = {
             action: 'updateData',
             pin: adminPin,
@@ -371,7 +335,6 @@
 
           if (result.status === "success") {
             Swal.fire('สำเร็จ!', 'แก้ไขข้อมูลในระบบเรียบร้อยแล้ว', 'success');
-            // รีโหลดข้อมูลใหม่ทั้งหมดเพื่อให้ตารางและกราฟอัปเดต
             const reloadRes = await fetch(`${SCRIPT_URL}?action=getAdminData&pin=${adminPin}`);
             const reloadResult = await reloadRes.json();
             globalData = reloadResult.data;
