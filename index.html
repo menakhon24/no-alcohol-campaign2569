@@ -3,47 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ลงทะเบียนกิจกรรม บวชจิตบวชใจ "งดเหล้าเข้าพรรษา" ๒๕๖๙</title>
+  <title>ลงทะเบียนกิจกรรม "งดเหล้าเข้าพรรษา" 2569</title>
   
   <!-- ฟอนต์สารบรรณ (Sarabun) -->
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Flatpickr CSS สำหรับปฏิทิน -->
+  <!-- นำเข้า FontAwesome สำหรับไอคอน -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   
-  <!-- SweetAlert2 CSS สำหรับ Popup สวยๆ -->
+  <!-- SweetAlert2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
   <style>
     :root {
-      --primary-color: #e65100; /* สีส้มจีวร */
-      --secondary-color: #ff9800;
-      --bg-color: #fdfbfb;
+      --primary-color: #f57c00; /* สีส้ม */
+      --secondary-color: #ffb74d;
+      --bg-color: #f4f6f9;
       --text-color: #333;
     }
     
     body {
       font-family: 'Sarabun', sans-serif;
-      background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+      background-color: var(--bg-color);
       color: var(--text-color);
       margin: 0;
       padding: 0;
     }
 
+    /* --- ส่วนหัวเว็บ (Hero Section) --- */
     .header-banner {
-      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      background: linear-gradient(135deg, #f57c00 0%, #ff9800 100%);
       color: white;
       text-align: center;
-      padding: 40px 20px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 50px 20px 60px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 10px 20px rgba(245, 124, 0, 0.2);
     }
-    
-    .header-banner h1 { margin: 0; font-size: 2rem; }
-    .header-banner p { margin-top: 10px; font-size: 1.1rem; opacity: 0.9; }
+    .header-banner h1 { margin: 0; font-size: 2.2rem; font-weight: 700; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+    .header-banner p { margin-top: 15px; font-size: 1.2rem; opacity: 0.95; line-height: 1.5; }
 
     .container {
-      max-width: 800px;
-      margin: -30px auto 40px;
+      max-width: 850px;
+      margin: -40px auto 50px;
       padding: 0 20px;
       position: relative;
       z-index: 10;
@@ -52,42 +57,54 @@
     /* --- ส่วนของ Dashboard สถิติ --- */
     .dashboard {
       background: white;
-      border-radius: 15px;
-      padding: 30px;
+      border-radius: 20px;
+      padding: 35px;
       text-align: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
       margin-bottom: 30px;
     }
-    .stats-title { font-size: 1.2rem; color: #555; }
-    .stats-number { font-size: 4rem; font-weight: bold; color: var(--primary-color); line-height: 1; margin: 10px 0; }
-    .stats-unit { font-size: 1.2rem; color: #777; }
+    .stats-title { font-size: 1.3rem; color: #666; font-weight: 600; }
+    .stats-number { 
+      font-size: 5rem; 
+      font-weight: 700; 
+      color: var(--primary-color); 
+      line-height: 1; 
+      margin: 15px 0; 
+      text-shadow: 2px 2px 0px #ffe0b2;
+    }
+    .stats-unit { font-size: 1.2rem; color: #888; }
 
-    /* --- ส่วนของข้อความวิ่ง (Marquee) --- */
+    /* --- ส่วนของข้อความวิ่ง (Marquee) ปรับให้เห็นชัดเจน --- */
     .marquee-container {
       width: 100%;
       overflow: hidden;
-      background: #fff8e1;
-      padding: 12px 0;
+      background: #fff3e0;
+      padding: 15px 0;
       border-radius: 50px;
-      margin-top: 20px;
-      border: 1px solid #ffe082;
-      display: none; /* ซ่อนไว้ก่อนจนกว่าจะโหลดข้อมูลสำเร็จ */
+      margin-top: 25px;
+      border: 1px solid #ffe0b2;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+      display: block; /* เปิดให้แสดงผลตลอดเวลา */
     }
     .marquee-content {
       display: flex;
-      animation: scroll-left 25s linear infinite;
+      animation: scroll-left 20s linear infinite;
       white-space: nowrap;
     }
     .vow-item {
-      margin-right: 40px;
-      padding: 5px 20px;
+      margin-right: 30px;
+      padding: 8px 25px;
       background: white;
       border-radius: 30px;
-      color: var(--primary-color);
+      color: #e65100;
       font-weight: 600;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(230, 81, 0, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    .vow-item span { color: #555; font-weight: normal; }
+    .vow-item span { color: #555; font-weight: 400; }
     @keyframes scroll-left {
       0% { transform: translateX(100%); }
       100% { transform: translateX(-150%); }
@@ -97,51 +114,71 @@
     /* --- ส่วนของฟอร์มลงทะเบียน --- */
     .form-container {
       background: white;
-      border-radius: 15px;
+      border-radius: 20px;
       padding: 40px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
     }
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .form-header h2 { color: var(--primary-color); margin: 0 0 10px 0; font-size: 1.8rem; }
+    .form-header p { color: #777; margin: 0; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
+    
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #444; }
     .form-control {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
       font-size: 1rem;
       font-family: 'Sarabun', sans-serif;
       box-sizing: border-box;
-      transition: border-color 0.3s;
+      transition: all 0.3s;
+      background-color: #fafafa;
     }
-    .form-control:focus { border-color: var(--primary-color); outline: none; }
+    .form-control:focus { 
+      border-color: var(--primary-color); 
+      background-color: white; 
+      outline: none; 
+      box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.1); 
+    }
     textarea.form-control { resize: vertical; min-height: 100px; }
     
     .btn-submit {
       width: 100%;
-      padding: 15px;
-      background: var(--primary-color);
+      padding: 16px;
+      background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 1.2rem;
+      border-radius: 10px;
+      font-size: 1.3rem;
       font-weight: bold;
       cursor: pointer;
       font-family: 'Sarabun', sans-serif;
-      transition: background 0.3s;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
+      margin-top: 10px;
     }
-    .btn-submit:hover { background: #cc4800; }
-    .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
-
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    .btn-submit:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 20px rgba(230, 81, 0, 0.4); 
+    }
+    .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
+    
+    .required-star { color: #e53935; }
   </style>
 </head>
 <body>
 
   <!-- ส่วนหัว -->
   <div class="header-banner">
-    <h1>🙏 บวชจิตบวชใจ "งดเหล้าเข้าพรรษา"</h1>
-    <p>กิจกรรมทำความดีด้วยหัวใจ ประจำปี พ.ศ.๒๕๖๙ (ปีที่ ๕)<br>โดย กลุ่มกฎหมายและคดี สพป.สุรินทร์ เขต 3</p>
+    <h1><i class="fa-solid fa-hands-praying"></i> บวชจิตบวชใจ "งดเหล้าเข้าพรรษา" 2569</h1>
+    <p>กิจกรรมทำความดีด้วยหัวใจ ประจำปี พ.ศ. 2569 (ปีที่ 5)<br>โดย กลุ่มกฎหมายและคดี สพป.สุรินทร์ เขต 3</p>
   </div>
 
   <div class="container">
@@ -152,23 +189,30 @@
       <div class="stats-number" id="counter">0</div>
       <div class="stats-unit">ท่าน</div>
 
-      <div class="marquee-container" id="marqueeBox">
+      <div class="marquee-container">
         <div class="marquee-content" id="vowList">
-          <!-- ข้อมูลจาก Sheet จะถูกโหลดมาใส่ตรงนี้ -->
+          <!-- ข้อมูลจำลอง (Mockup) เพื่อให้เห็นข้อความวิ่งทันที -->
+          <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณสมชาย : <span>"เพื่อสุขภาพที่แข็งแรง"</span></div>
+          <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณสมหญิง : <span>"เป็นแบบอย่างที่ดีให้นักเรียน"</span></div>
+          <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณมานะ : <span>"ลดค่าใช้จ่ายในครอบครัว"</span></div>
+          <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณวิไล : <span>"ตั้งใจทำความดีถวายเป็นพุทธบูชา"</span></div>
         </div>
       </div>
     </div>
 
     <!-- ฟอร์มลงทะเบียน -->
     <div class="form-container">
-      <h2 style="text-align: center; color: var(--primary-color); margin-top: 0;">ฟอร์มตั้งสัจจะอธิษฐาน</h2>
+      <div class="form-header">
+        <h2>แบบฟอร์มลงทะเบียน</h2>
+        <p>กรุณากรอกข้อมูลเพื่อรับเกียรติบัตรออนไลน์</p>
+      </div>
+
       <form id="vowForm">
-        
         <div class="grid-2">
           <div class="form-group">
-            <label>คำนำหน้าชื่อ <span style="color:red;">*</span></label>
+            <label>คำนำหน้าชื่อ <span class="required-star">*</span></label>
             <select class="form-control" name="prefix" required>
-              <option value="" disabled selected>เลือกคำนำหน้า...</option>
+              <option value="" disabled selected>เลือก...</option>
               <option value="นาย">นาย</option>
               <option value="นาง">นาง</option>
               <option value="นางสาว">นางสาว</option>
@@ -177,18 +221,18 @@
             </select>
           </div>
           <div class="form-group">
-            <label>ชื่อ - นามสกุล <span style="color:red;">*</span></label>
+            <label>ชื่อ - นามสกุล <span class="required-star">*</span></label>
             <input type="text" class="form-control" name="fullName" placeholder="เช่น สมชาย ใจดี" required>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
-            <label>อีเมล (E-mail) <span style="color:red;">*</span></label>
+            <label>อีเมล (E-mail) <span class="required-star">*</span></label>
             <input type="email" class="form-control" name="email" placeholder="สำหรับรับเกียรติบัตร" required>
           </div>
           <div class="form-group">
-            <label>ตำแหน่ง <span style="color:red;">*</span></label>
+            <label>ตำแหน่ง <span class="required-star">*</span></label>
             <input type="text" class="form-control" name="position" placeholder="เช่น ครู, นิติกร, บุคคลทั่วไป" required>
           </div>
         </div>
@@ -199,16 +243,16 @@
             <input type="text" class="form-control" name="organization" placeholder="ชื่อหน่วยงานที่สังกัด">
           </div>
           <div class="form-group">
-            <label>ปัจจุบันอยู่จังหวัด <span style="color:red;">*</span></label>
+            <label>ปัจจุบันอยู่จังหวัด <span class="required-star">*</span></label>
             <input type="text" class="form-control" name="province" placeholder="เช่น สุรินทร์" required>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
-            <label>เคยร่วมกิจกรรมนี้กับ สพป.สุรินทร์ เขต 3 กี่ครั้ง? <span style="color:red;">*</span></label>
+            <label>ร่วมกิจกรรมกับ สพป.สุรินทร์ เขต 3 กี่ครั้ง? <span class="required-star">*</span></label>
             <select class="form-control" name="history" required>
-              <option value="1">1 ครั้ง (เพิ่งร่วมปีนี้ปีแรก)</option>
+              <option value="1">1 ครั้ง (เพิ่งร่วมปีแรก)</option>
               <option value="2">2 ครั้ง</option>
               <option value="3">3 ครั้ง</option>
               <option value="4">4 ครั้ง</option>
@@ -216,7 +260,7 @@
             </select>
           </div>
           <div class="form-group">
-            <label>ระยะเวลาที่ประสงค์จะงดเหล้า <span style="color:red;">*</span></label>
+            <label>ระยะเวลาที่ประสงค์จะงดเหล้า <span class="required-star">*</span></label>
             <select class="form-control" name="duration" required>
               <option value="ตลอดเข้าพรรษา (3 เดือน)">ตลอดเข้าพรรษา (3 เดือน)</option>
               <option value="1 เดือน">1 เดือน</option>
@@ -227,17 +271,17 @@
         </div>
 
         <div class="form-group">
-          <label>วันที่เริ่มต้นตั้งสัจจะอธิษฐาน <span style="color:red;">*</span></label>
-          <input type="text" id="startDate" class="form-control" name="startDate" placeholder="เลือกวันที่ (วว/ดด/ปปปป)" required>
+          <label>วันที่เริ่มต้นตั้งสัจจะอธิษฐาน <span class="required-star">*</span></label>
+          <input type="text" id="startDate" class="form-control" name="startDate" placeholder="เลือกวันที่" required>
         </div>
 
         <div class="form-group">
-          <label>ความคาดหวัง หรือเหตุผลที่เข้าร่วมกิจกรรม <span style="color:red;">*</span></label>
-          <textarea class="form-control" name="expectation" placeholder="เช่น เพื่อสุขภาพที่ดี, เพื่อเป็นแบบอย่างที่ดีแก่นักเรียน" required></textarea>
+          <label>ความคาดหวัง หรือเหตุผลที่เข้าร่วม <span class="required-star">*</span></label>
+          <textarea class="form-control" name="expectation" placeholder="เช่น เพื่อสุขภาพที่ดี, ลดรายจ่าย" required></textarea>
         </div>
 
         <div class="form-group">
-          <label>ความพึงพอใจต่อการจัดกิจกรรมออนไลน์ <span style="color:red;">*</span></label>
+          <label>ความพึงพอใจต่อการจัดกิจกรรมออนไลน์ <span class="required-star">*</span></label>
           <select class="form-control" name="satisfaction" required>
             <option value="มากที่สุด">มากที่สุด</option>
             <option value="มาก">มาก</option>
@@ -251,7 +295,9 @@
           <textarea class="form-control" name="suggestion" placeholder="พิมพ์ข้อเสนอแนะ..."></textarea>
         </div>
 
-        <button type="submit" class="btn-submit" id="submitBtn">🙏 ยืนยันการตั้งสัจจะอธิษฐาน</button>
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <i class="fa-solid fa-paper-plane"></i> ยืนยันการตั้งสัจจะอธิษฐาน
+        </button>
       </form>
     </div>
   </div>
@@ -265,7 +311,7 @@
 
   <script>
     // ==========================================
-    // 1. ใส่ URL ของ Web App ที่ได้จาก Google Apps Script
+    // 1. ใส่ URL ของ Web App ที่ได้จาก Google Apps Script ที่นี่
     // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
 
@@ -286,27 +332,29 @@
     });
 
     // ==========================================
-    // 3. ฟังก์ชันดึงข้อมูลสถิติและข้อความวิ่ง
+    // 3. ฟังก์ชันดึงข้อมูลสถิติและข้อความวิ่ง (จาก Sheet)
     // ==========================================
     async function fetchStats() {
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') return;
+      // ถ้ายัไม่ได้ใส่ URL ให้รันตัวเลขจำลองไปก่อน เพื่อความสวยงาม
+      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+         animateValue("counter", 0, 15, 2000); 
+         return;
+      }
+
       try {
         const response = await fetch(SCRIPT_URL);
         const data = await response.json();
         
         if(data.status === "success") {
-          // แอนิเมชันตัวเลข
           animateValue("counter", 0, data.total, 1500); 
           
-          // แสดงข้อความวิ่ง
           if(data.vows && data.vows.length > 0) {
             const vowList = document.getElementById("vowList");
-            document.getElementById("marqueeBox").style.display = "block";
-            
             let htmlString = "";
             data.vows.forEach(vow => {
-              htmlString += `<div class="vow-item">🙏 ${vow.name} : <span>"${vow.expectation}"</span></div>`;
+              htmlString += `<div class="vow-item"><i class="fa-solid fa-seedling"></i> ${vow.name} : <span>"${vow.expectation}"</span></div>`;
             });
+            // เอาข้อมูลจากฐานข้อมูลมาแทนที่ข้อมูลจำลอง
             vowList.innerHTML = htmlString;
           }
         }
@@ -329,55 +377,59 @@
       }, stepTime);
     }
 
-    // เรียกใช้เมื่อเปิดหน้าเว็บ
     window.onload = fetchStats;
 
     // ==========================================
     // 4. ฟังก์ชันจัดการการส่งฟอร์ม (Submit)
     // ==========================================
     document.getElementById('vowForm').addEventListener('submit', async function(e) {
-      e.preventDefault(); // ป้องกันการรีเฟรชหน้า
+      e.preventDefault(); 
       
+      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'ยังไม่ได้เชื่อมต่อระบบ',
+          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 261) ก่อนใช้งานจริงครับ'
+        });
+        return;
+      }
+
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
-      submitBtn.innerText = "กำลังบันทึกข้อมูลและสร้างเกียรติบัตร...";
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกข้อมูล...';
 
-      // รวบรวมข้อมูลจากฟอร์ม
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
       
-      // นำวันที่เริ่มต้นไปต่อท้ายระยะเวลา เพื่อให้โค้ด Apps Script เดิมทำงานได้ปกติโดยไม่ต้องแก้หลังบ้าน
       data.duration = `${data.duration} (เริ่ม: ${data.startDate})`;
 
       try {
-        // ส่งข้อมูลแบบ POST (ใช้ mode: 'no-cors' เพื่อเลี่ยงปัญหา Cross-Origin ในบางเบราว์เซอร์ หากไม่ได้ตั้ง Headers ฝั่งเซิร์ฟเวอร์ไว้)
         await fetch(SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(data)
         });
         
-        // แจ้งเตือนเมื่อสำเร็จ
         Swal.fire({
           icon: 'success',
           title: 'อนุโมทนาบุญ',
           text: 'บันทึกข้อมูลเรียบร้อยแล้ว ระบบได้จัดส่งเกียรติบัตรไปยังอีเมลของคุณ',
-          confirmButtonColor: '#e65100'
+          confirmButtonColor: '#f57c00'
         });
 
-        this.reset(); // ล้างข้อมูลในฟอร์ม
-        fetchStats(); // อัปเดตสถิติทันที
+        this.reset(); 
+        fetchStats(); 
 
       } catch (error) {
         Swal.fire({
           icon: 'error',
           title: 'เกิดข้อผิดพลาด',
           text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-          confirmButtonColor: '#e65100'
+          confirmButtonColor: '#f57c00'
         });
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerText = "🙏 ยืนยันการตั้งสัจจะอธิษฐาน";
+        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ยืนยันการตั้งสัจจะอธิษฐาน';
       }
     });
   </script>
