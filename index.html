@@ -5,16 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ลงทะเบียนกิจกรรม "งดเหล้าเข้าพรรษา" 2569</title>
   
-  <!-- ฟอนต์สารบรรณ (Sarabun) -->
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- นำเข้า FontAwesome สำหรับไอคอน -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- Flatpickr CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  
-  <!-- SweetAlert2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
   <style>
@@ -36,7 +29,6 @@
       min-height: 100vh;
     }
 
-    /* --- ภาพพื้นหลังเคลื่อนไหว (ภาพวัดและต้นโพธิ์จริง) --- */
     .bg-animated {
       position: fixed;
       top: 0;
@@ -64,7 +56,6 @@
       100% { transform: scale(1.1) translate(-15px, 15px); }
     }
 
-    /* --- แอนิเมชันใบโพธิ์ร่วง (Falling Leaves) --- */
     .leaf {
       position: fixed;
       top: -10%;
@@ -85,7 +76,6 @@
       100% { transform: translateX(40px) rotate(60deg); }
     }
 
-    /* --- ส่วนหัวเว็บ (Hero Section) --- */
     .header-banner {
       background: linear-gradient(135deg, rgba(245, 124, 0, 0.95) 0%, rgba(255, 152, 0, 0.95) 100%);
       color: white;
@@ -109,7 +99,6 @@
       flex: 1;
     }
 
-    /* --- ส่วนของ Dashboard สถิติ --- */
     .dashboard {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
@@ -148,7 +137,6 @@
     }
     .stats-unit { font-size: 1.2rem; color: #888; }
 
-    /* --- ส่วนของข้อความวิ่ง (Marquee) --- */
     .marquee-container {
       width: 100%;
       overflow: hidden;
@@ -185,7 +173,6 @@
     }
     .marquee-container:hover .marquee-content { animation-play-state: paused; }
 
-    /* --- ส่วนของฟอร์มลงทะเบียน --- */
     .form-container {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
@@ -250,7 +237,6 @@
       cursor: pointer;
     }
 
-    /* --- ส่วนของ PDPA --- */
     .pdpa-section {
       background-color: #fafafa;
       border: 1px solid #e0e0e0;
@@ -299,7 +285,6 @@
     
     .required-star { color: #e53935; }
 
-    /* --- ส่วน Footer (ช่องทางการติดต่อ) --- */
     .site-footer {
       text-align: center;
       padding: 25px 20px;
@@ -335,11 +320,9 @@
 </head>
 <body>
 
-  <!-- พื้นหลังเคลื่อนไหวแบบวัดไทยและต้นโพธิ์ -->
   <div class="bg-animated"></div>
   <div class="bg-overlay"></div>
 
-  <!-- ส่วนหัว -->
   <div class="header-banner">
     <h1><i class="fa-solid fa-hands-praying"></i> บวชจิตบวชใจ "งดเหล้าเข้าพรรษา" 2569</h1>
     <p>กิจกรรมทำความดีด้วยหัวใจ ประจำปี พ.ศ. 2569 (ปีที่ 5)<br>โดย กลุ่มกฎหมายและคดี สพป.สุรินทร์ เขต 3</p>
@@ -347,7 +330,6 @@
 
   <div class="container">
     
-    <!-- กระดานสถิติ & ปุ่มค้นหาเกียรติบัตร -->
     <div class="dashboard">
       <div class="action-buttons">
         <button type="button" class="btn-search" onclick="searchCertificate()">
@@ -369,7 +351,6 @@
       </div>
     </div>
 
-    <!-- ฟอร์มลงทะเบียน -->
     <div class="form-container">
       <div class="form-header">
         <h2>แบบฟอร์มลงทะเบียน</h2>
@@ -492,7 +473,6 @@
           <textarea class="form-control" name="suggestion" placeholder="พิมพ์ข้อเสนอแนะเพื่อการพัฒนากิจกรรมในครั้งต่อไป..."></textarea>
         </div>
 
-        <!-- ส่วนของ PDPA Consent -->
         <div class="pdpa-section">
           <input type="checkbox" id="pdpa" name="pdpa" required>
           <label for="pdpa" class="pdpa-text">
@@ -508,7 +488,6 @@
     </div>
   </div>
 
-  <!-- ส่วน Footer (ช่องทางการติดต่อ เชื่อมลิงก์ Facebook) -->
   <footer class="site-footer">
     <p style="margin-bottom: 12px; color: #555;">ติดต่อสอบถามเพิ่มเติมได้ที่</p>
     <a href="https://www.facebook.com/law.surin3" target="_blank" class="facebook-link">
@@ -518,23 +497,16 @@
     <p>© 2569 กิจกรรมทำความดีด้วยหัวใจ บวชจิตบวชใจ "งดเหล้าเข้าพรรษา" ประจำปีที่ 5</p>
   </footer>
 
-  <!-- นำเข้า Flatpickr JS และภาษาไทย -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
-  
-  <!-- นำเข้า SweetAlert2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     // ==========================================
-    // 1. นำ URL ของ Web App ที่ได้จาก Google Apps Script มาใส่ในเครื่องหมายคำพูดเดี่ยวด้านล่างนี้
-    // (ตัวอย่าง: const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec';)
+    // 1. นำ URL ของ Web App ที่ได้จาก Google Apps Script มาใส่ตรงนี้
     // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
 
-    // ==========================================
-    // 2. เอฟเฟกต์ใบโพธิ์ร่วงหล่นแบบสุ่ม
-    // ==========================================
     function createLeaves() {
       const leafCount = 18; 
       const colors = ['#d4af37', '#fbc02d', '#8bc34a', '#cddc39']; 
@@ -558,9 +530,6 @@
     }
     window.addEventListener('load', createLeaves);
 
-    // ==========================================
-    // 3. ตั้งค่า Flatpickr (แปลง ค.ศ. เป็น พ.ศ. เสมอ)
-    // ==========================================
     flatpickr("#startDate", {
       locale: "th",
       dateFormat: "d/m/Y",
@@ -574,11 +543,8 @@
       }
     });
 
-    // ==========================================
-    // 4. ฟังก์ชันดึงข้อมูลสถิติและข้อความวิ่ง
-    // ==========================================
     async function fetchStats() {
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+      if(!SCRIPT_URL || SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
          animateValue("counter", 0, 15, 2000); 
          return;
       }
@@ -623,11 +589,8 @@
       fetchStats();
     };
 
-    // ==========================================
-    // 5. ฟังก์ชันค้นหาเกียรติบัตรด้วยเบอร์โทรศัพท์
-    // ==========================================
     async function searchCertificate() {
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+      if(!SCRIPT_URL || SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
         Swal.fire('ยังไม่ได้เชื่อมต่อระบบ', 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 428) ก่อนครับ', 'warning');
         return;
       }
@@ -662,7 +625,7 @@
               confirmButtonText: 'ปิดหน้าต่าง'
             });
           } else {
-            Swal.fire('ไม่พบข้อมูล', 'ไม่มีประวัติการลงทะเบียนด้วยเบอร์โทรศัพท์นี้ในระบบ', 'error');
+            Swal.fire('ไม่พบข้อมูล', result.message || 'ไม่มีประวัติการลงทะเบียนด้วยเบอร์โทรศัพท์นี้ในระบบ', 'error');
           }
         } catch (err) {
           Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อระบบหลังบ้านได้', 'error');
@@ -670,13 +633,10 @@
       }
     }
 
-    // ==========================================
-    // 6. ฟังก์ชันจัดการการส่งฟอร์ม (Submit)
-    // ==========================================
     document.getElementById('vowForm').addEventListener('submit', async function(e) {
       e.preventDefault(); 
       
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+      if(!SCRIPT_URL || SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
         Swal.fire({
           icon: 'warning',
           title: 'ยังไม่ได้เชื่อมต่อระบบ',
@@ -704,7 +664,6 @@
         
         const result = await response.json();
         
-        // เมื่อบันทึกสำเร็จ
         if(result.status === "success") {
           Swal.fire({
             icon: 'success',
@@ -724,7 +683,6 @@
           this.reset(); 
           fetchStats(); 
           
-        // แจ้งเตือนเมื่อเจอเบอร์โทรศัพท์ซ้ำซ้อน (Anti-Spam)
         } else if (result.status === "duplicate") {
           Swal.fire({
             icon: 'warning',
@@ -735,14 +693,14 @@
           });
           
         } else {
-          throw new Error(result.message);
+          throw new Error(result.message || "เกิดข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์");
         }
 
       } catch (error) {
         Swal.fire({
           icon: 'error',
           title: 'เกิดข้อผิดพลาด',
-          text: 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+          text: error.message || 'ไม่สามารถบันทึกข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
           confirmButtonColor: '#f57c00'
         });
       } finally {
