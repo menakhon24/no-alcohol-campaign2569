@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ลงทะเบียน งดเหล้าเข้าพรรษา ๒๕๖๙ - สพป.สุรินทร์ เขต 3</title>
+    <!-- นำเข้า Tailwind CSS สำหรับการจัดสไตล์ที่สวยงามและรวดเร็ว -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- นำเข้า Font Awesome สำหรับไอคอน -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- นำเข้า Google Fonts (Prompt) -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        // ตั้งค่า Tailwind ให้ใช้ฟอนต์ Prompt และสีธีม
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        buddha: {
+                            50: '#fff9ed',
+                            100: '#fff2d4',
+                            200: '#ffe0a8',
+                            300: '#ffc871',
+                            400: '#ffa433',
+                            500: '#ff8a0a',
+                            600: '#eb6f00',
+                            700: '#c35502',
+                            800: '#9b4209',
+                            900: '#7d370b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='#ff8a0a' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+        /* ซ่อนลูกศรใน input type number */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Hero Section -->
+    <header class="relative bg-gradient-to-br from-buddha-600 via-buddha-500 to-yellow-400 overflow-hidden shadow-lg">
+        <!-- ลวดลายพื้นหลัง -->
+        <div class="absolute inset-0 opacity-20">
+            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z" fill="white"></path>
+            </svg>
+        </div>
+        
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24 text-center">
+            <div class="inline-flex items-center justify-center p-3 bg-white/20 rounded-full mb-4 backdrop-blur-sm border border-white/30">
+                <i class="fa-solid fa-leaf text-white text-xl mr-2"></i>
+                <span class="text-white font-medium tracking-wide">ทำความดีด้วยหัวใจ บวชจิตบวชใจ</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 drop-shadow-md leading-tight">
+                "งดเหล้าเข้าพรรษา"<br>
+                <span class="text-yellow-100 text-3xl md:text-4xl block mt-2 font-semibold">ประจำปี พ.ศ. ๒๕๖๙ (ปีที่ ๕)</span>
+            </h1>
+            <p class="mt-4 text-lg md:text-xl text-white/90 max-w-2xl mx-auto drop-shadow">
+                เชิญชวนข้าราชการครู บุคลากรทางการศึกษา และประชาชนทั่วไป ร่วมอธิษฐานจิต<br>เพื่อสุขภาพกาย สุขภาพใจ และเป็นแบบอย่างที่ดีแก่สังคม
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow -mt-12 relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        
+        <!-- สถิติ Dashboard -->
+        <div class="glass-card rounded-2xl p-6 mb-8 text-center flex flex-col items-center justify-center transform transition-transform hover:scale-[1.02] duration-300">
+            <h2 class="text-xl text-gray-600 font-medium mb-2">ยอดผู้ร่วมตั้งสัจจะอธิษฐานแล้วจำนวน</h2>
+            <div class="flex items-baseline space-x-2">
+                <span id="counter" class="text-6xl md:text-7xl font-bold text-buddha-600 drop-shadow-sm">0</span>
+                <span class="text-2xl text-gray-500 font-medium">ท่าน</span>
+            </div>
+            <p class="text-sm text-gray-400 mt-2"><i class="fa-solid fa-circle-check text-green-500 mr-1"></i>ข้อมูลอัปเดตแบบเรียลไทม์</p>
+        </div>
+
+        <!-- ฟอร์มลงทะเบียน -->
+        <div class="glass-card rounded-2xl p-6 md:p-10">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-800">แบบฟอร์มลงทะเบียนรับเกียรติบัตร</h3>
+                <p class="text-gray-500 mt-2">กรุณากรอกข้อมูลให้ครบถ้วน เพื่อความถูกต้องในการออกเกียรติบัตร</p>
+            </div>
+
+            <form id="registrationForm" class="space-y-6">
+                <!-- ข้อมูลส่วนตัว -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="col-span-1">
+                        <label for="prefix" class="block text-sm font-medium text-gray-700 mb-1">คำนำหน้าชื่อ <span class="text-red-500">*</span></label>
+                        <select id="prefix" name="prefix" required class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                            <option value="">เลือกคำนำหน้า</option>
+                            <option value="นาย">นาย</option>
+                            <option value="นาง">นาง</option>
+                            <option value="นางสาว">นางสาว</option>
+                            <option value="ว่าที่ ร.ต.">ว่าที่ ร.ต.</option>
+                            <option value="ว่าที่ ร.ต. หญิง">ว่าที่ ร.ต. หญิง</option>
+                            <option value="อื่นๆ">อื่นๆ</option>
+                        </select>
+                    </div>
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">ชื่อ - นามสกุล <span class="text-red-500">*</span></label>
+                        <input type="text" id="fullName" name="fullName" required placeholder="เช่น สมชาย ใจดี (ไม่ต้องใส่คำนำหน้า)" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="email" name="email" required placeholder="สำหรับรับเกียรติบัตร" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                    </div>
+                    <div>
+                        <label for="position" class="block text-sm font-medium text-gray-700 mb-1">ตำแหน่ง <span class="text-red-500">*</span></label>
+                        <input type="text" id="position" name="position" required placeholder="เช่น ครู, ผู้อำนวยการ, ประชาชนทั่วไป" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                    </div>
+                </div>
+
+                <!-- ข้อมูลหน่วยงาน -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="organization" class="block text-sm font-medium text-gray-700 mb-1">ชื่อโรงเรียน / หน่วยงานที่สังกัด <span class="text-gray-400 font-normal">(ถ้ามี)</span></label>
+                        <input type="text" id="organization" name="organization" placeholder="เช่น รร.บ้านหนองขุ่น, สพป.สุรินทร์ เขต 3" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                    </div>
+                    <div>
+                        <label for="province" class="block text-sm font-medium text-gray-700 mb-1">ปัจจุบันอยู่จังหวัด <span class="text-red-500">*</span></label>
+                        <input type="text" id="province" name="province" required value="สุรินทร์" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                    </div>
+                </div>
+
+                <!-- ข้อมูลการเข้าร่วมกิจกรรม -->
+                <div class="border-t border-gray-200 pt-6 mt-6">
+                    <h4 class="text-lg font-medium text-gray-800 mb-4"><i class="fa-solid fa-hands-praying text-buddha-500 mr-2"></i>ข้อมูลการตั้งสัจจะอธิษฐาน</h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="history" class="block text-sm font-medium text-gray-700 mb-1">ท่านเคยร่วมกิจกรรมนี้กับ สพป.สร.3 แล้วกี่ครั้ง <span class="text-red-500">*</span></label>
+                            <select id="history" name="history" required class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                                <option value="">เลือกจำนวนครั้ง (นับรวมครั้งนี้)</option>
+                                <option value="1 ครั้ง (เข้าร่วมปีนี้ปีแรก)">1 ครั้ง (เข้าร่วมปีนี้ปีแรก)</option>
+                                <option value="2 ครั้ง">2 ครั้ง</option>
+                                <option value="3 ครั้ง">3 ครั้ง</option>
+                                <option value="4 ครั้ง">4 ครั้ง</option>
+                                <option value="5 ครั้ง">5 ครั้ง</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">ระยะเวลาที่ประสงค์จะงดเครื่องดื่มแอลกอฮอล์ <span class="text-red-500">*</span></label>
+                            <select id="duration" name="duration" required class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow">
+                                <option value="">เลือกระยะเวลา</option>
+                                <option value="ตลอดช่วงเข้าพรรษา (3 เดือน)">ตลอดช่วงเข้าพรรษา (3 เดือน)</option>
+                                <option value="งดเฉพาะวันพระตลอดเข้าพรรษา">งดเฉพาะวันพระตลอดเข้าพรรษา</option>
+                                <option value="งด 1 เดือน">งด 1 เดือน</option>
+                                <option value="อื่นๆ">อื่นๆ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="expectation" class="block text-sm font-medium text-gray-700 mb-1">ความคาดหวังหรือเหตุผลที่เข้าร่วมกิจกรรมในครั้งนี้ <span class="text-red-500">*</span></label>
+                        <textarea id="expectation" name="expectation" rows="2" required placeholder="เช่น เพื่อสุขภาพที่ดีขึ้น, เพื่อเป็นแบบอย่างให้ลูกศิษย์, เพื่อประหยัดค่าใช้จ่าย" class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- การประเมิน -->
+                <div class="border-t border-gray-200 pt-6 mt-6">
+                    <h4 class="text-lg font-medium text-gray-800 mb-4"><i class="fa-solid fa-star text-yellow-400 mr-2"></i>การประเมินและข้อเสนอแนะ</h4>
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-3">ท่านมีความพึงพอใจต่อการจัดกิจกรรม "งดเหล้าเข้าพรรษา" ผ่านระบบออนไลน์ ระดับใด <span class="text-red-500">*</span></label>
+                        <div class="flex flex-wrap gap-4 md:gap-8">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="radio" name="satisfaction" value="มากที่สุด" required class="text-buddha-600 focus:ring-buddha-500 h-4 w-4">
+                                <span class="ml-2 text-gray-700">มากที่สุด</span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="radio" name="satisfaction" value="มาก" class="text-buddha-600 focus:ring-buddha-500 h-4 w-4">
+                                <span class="ml-2 text-gray-700">มาก</span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="radio" name="satisfaction" value="ปานกลาง" class="text-buddha-600 focus:ring-buddha-500 h-4 w-4">
+                                <span class="ml-2 text-gray-700">ปานกลาง</span>
+                            </label>
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="radio" name="satisfaction" value="น้อย" class="text-buddha-600 focus:ring-buddha-500 h-4 w-4">
+                                <span class="ml-2 text-gray-700">น้อย</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="suggestion" class="block text-sm font-medium text-gray-700 mb-1">ข้อเสนอแนะ <span class="text-gray-400 font-normal">(ถ้ามี)</span></label>
+                        <textarea id="suggestion" name="suggestion" rows="2" placeholder="เสนอแนะแนวทางการจัดกิจกรรมในปีต่อไป..." class="w-full rounded-lg border-gray-300 border px-4 py-2.5 focus:border-buddha-500 focus:ring-buddha-500 outline-none transition-shadow resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- ปุ่ม Submit -->
+                <div class="pt-4 text-center">
+                    <button type="submit" id="submitBtn" class="bg-gradient-to-r from-buddha-600 to-buddha-500 hover:from-buddha-700 hover:to-buddha-600 text-white font-semibold py-3 px-10 rounded-full shadow-lg transform transition-all hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-buddha-200">
+                        <i class="fa-solid fa-paper-plane mr-2"></i> ส่งข้อมูลและรับเกียรติบัตร
+                    </button>
+                    <p class="text-sm text-gray-500 mt-4">เกียรติบัตรจะถูกส่งไปยังอีเมลที่ท่านระบุไว้โดยอัตโนมัติ</p>
+                </div>
+            </form>
+
+            <!-- กล่องข้อความสำเร็จ (ซ่อนไว้ก่อน) -->
+            <div id="successMessage" class="hidden text-center py-10">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
+                    <i class="fa-solid fa-check text-4xl text-green-500"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">อนุโมทนาบุญ! ลงทะเบียนสำเร็จ</h3>
+                <p class="text-gray-600 mb-6">ระบบได้บันทึกการตั้งสัจจะอธิษฐานของท่านเรียบร้อยแล้ว<br>กรุณาตรวจสอบอีเมลของท่านเพื่อรับเกียรติบัตร</p>
+                <button onclick="location.reload()" class="text-buddha-600 font-medium hover:text-buddha-700 underline">
+                    กลับไปหน้าลงทะเบียนใหม่
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white/70 py-8 text-center text-sm">
+        <p>กลุ่มกฎหมายและคดี สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสุรินทร์ เขต 3</p>
+        <p class="mt-1">โครงการ บวชจิตบวชใจ “งดเหล้าเข้าพรรษา” ประจำปี พ.ศ. ๒๕๖๙</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        //        // --- 1. ใส่ URL ของ Web App ที่คุณได้จาก Apps Script ลงในช่องว่างนี้ ---
+        const SCRIPT_URL = ''; // EX: 'https://script.google.com/macros/s/AKfycby.../exec'
+
+        // --- 2. ฟังก์ชันดึงสถิติยอดผู้ลงทะเบียน ---
+        async function fetchStats() {
+            if (!SCRIPT_URL || SCRIPT_URL === '') {
+                // ถ้ายังไม่ใส่ URL ให้แสดงผลจำลองไปก่อน
+                animateValue("counter", 0, 158, 2000);
+                return;
+            }
+
+            try {
+                // ดึงข้อมูลสถิติจาก Apps Script แบบ GET Request
+                const response = await fetch(SCRIPT_URL);
+                const data = await response.json();
+                
+                if(data.status === 'success') {
+                    animateValue("counter", 0, data.total, 2000);
+                }
+            } catch (error) { 
+                console.error("Error fetching stats:", error); 
+                // หากดึงไม่ได้ให้แสดงเลข 0 ไว้ก่อน
+                document.getElementById('counter').innerText = '0';
+            }
+        }
+
+        //        // ฟังก์ชันทำเอฟเฟกต์ตัวเลขวิ่ง
+        function animateValue(id, start, end, duration) {
+            let obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // ใช้ easeOut effect ให้ตัวเลขวิ่งช้าลงตอนท้าย
+                const easeOut = progress * (2 - progress);
+                obj.innerHTML = Math.floor(easeOut * (end - start) + start);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    obj.innerHTML = end;
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        //        // --- 3. จัดการเมื่อกดปุ่ม Submit ---
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // ป้องกันการรีเฟรชหน้าเว็บ
+            
+            const btn = document.getElementById('submitBtn');
+            const form = document.getElementById('registrationForm');
+            const successBox = document.getElementById('successMessage');
+
+            // เปลี่ยนสถานะปุ่มเป็นกำลังโหลด
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> กำลังบันทึกข้อมูลและสร้างเกียรติบัตร...';
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            // รวบรวมข้อมูลจากฟอร์มให้เป็น Object
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            if (!SCRIPT_URL || SCRIPT_URL === '') {
+                // โหมดจำลอง (ถ้ายังไม่ได้ใส่ Web App URL)
+                setTimeout(() => {
+                    form.classList.add('hidden');
+                    successBox.classList.remove('hidden');
+                    let currentVal = parseInt(document.getElementById('counter').innerText);
+                    animateValue("counter", currentVal, currentVal + 1, 1000);
+                    window.scrollTo({ top: document.querySelector('.glass-card').offsetTop - 20, behavior: 'smooth' });
+                }, 2000);
+                return;
+            }
+
+            // ส่งข้อมูลไปยัง Google Apps Script
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                // ใช้ text/plain เพื่อป้องกันปัญหา CORS Preflight Error ของ Google Apps Script
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' } 
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.status === 'success') {
+                    // ปิดฟอร์ม แสดงข้อความสำเร็จ
+                    form.classList.add('hidden');
+                    successBox.classList.remove('hidden');
+                    // ดึงสถิติใหม่
+                    fetchStats(); 
+                    // เลื่อนจอขึ้น
+                    window.scrollTo({ top: document.querySelector('.glass-card').offsetTop - 20, behavior: 'smooth' });
+                } else {
+                    alert('เกิดข้อผิดพลาดจากระบบ: ' + result.message);
+                    btn.innerHTML = originalBtnText;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                }
+            })
+            .catch(error => {
+                console.error('Error!', error.message);
+                alert('เกิดข้อผิดพลาดในการเชื่อมต่อ กรุณาลองใหม่อีกครั้ง');
+                btn.innerHTML = originalBtnText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-not-allowed');
+            });
+        });
+
+        //        // โหลดสถิติทันทีที่เปิดหน้าเว็บ
+        window.onload = fetchStats;
+    </script>
+</body>
+</html>
