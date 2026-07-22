@@ -29,23 +29,25 @@
       color: var(--text-color);
       margin: 0;
       padding: 0;
-      background: transparent; /* ตั้งให้โปร่งใสเพื่อโชว์ภาพพื้นหลัง */
+      background: transparent;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    /* --- ภาพพื้นหลังเคลื่อนไหว (Animated Background) --- */
+    /* --- ภาพพื้นหลังเคลื่อนไหว (ภาพวัดและต้นโพธิ์จริง) --- */
     .bg-animated {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: url('https://images.unsplash.com/photo-1605335199676-13d80bf260a9?q=80&w=2000&auto=format&fit=crop') center center / cover no-repeat;
+      background: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?q=80&w=2000&auto=format&fit=crop') center center / cover no-repeat;
       z-index: -2;
       animation: zoomPan 40s infinite alternate ease-in-out;
     }
 
-    /* แผ่นฟิล์มกรองแสง */
     .bg-overlay {
       position: fixed;
       top: 0;
@@ -104,6 +106,7 @@
       padding: 0 20px;
       position: relative;
       z-index: 10;
+      flex: 1;
     }
 
     /* --- ส่วนของ Dashboard สถิติ --- */
@@ -117,9 +120,7 @@
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
-    .action-buttons {
-      margin-bottom: 25px;
-    }
+    .action-buttons { margin-bottom: 25px; }
     
     .btn-search {
       padding: 10px 25px;
@@ -134,11 +135,7 @@
       transition: all 0.3s;
       box-shadow: 0 4px 10px rgba(245, 124, 0, 0.15);
     }
-    .btn-search:hover {
-      background: var(--primary-color);
-      color: white;
-      transform: translateY(-2px);
-    }
+    .btn-search:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
 
     .stats-title { font-size: 1.3rem; color: #666; font-weight: 600; }
     .stats-number { 
@@ -227,10 +224,36 @@
     }
     textarea.form-control { resize: vertical; min-height: 100px; }
 
+    .affiliation-box {
+      background-color: #fff9f0;
+      border: 2px solid #ffcc80;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .radio-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #333;
+    }
+    .radio-label input[type="radio"] {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--primary-color);
+      cursor: pointer;
+    }
+
     /* --- ส่วนของ PDPA --- */
     .pdpa-section {
-      background-color: #fff9f0;
-      border: 1px solid #ffcc80;
+      background-color: #fafafa;
+      border: 1px solid #e0e0e0;
       border-radius: 10px;
       padding: 20px;
       margin-bottom: 25px;
@@ -275,11 +298,44 @@
     .btn-submit:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
     
     .required-star { color: #e53935; }
+
+    /* --- ส่วน Footer (ช่องทางการติดต่อ) --- */
+    .site-footer {
+      text-align: center;
+      padding: 25px 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 3px solid var(--primary-color);
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+    }
+    .site-footer a.facebook-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #1877F2; 
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      padding: 10px 25px;
+      border-radius: 30px;
+      background-color: #f0f2f5;
+      transition: all 0.3s;
+    }
+    .site-footer a.facebook-link:hover {
+      background-color: #e4e6eb;
+      transform: translateY(-2px);
+    }
+    .site-footer p {
+      margin: 15px 0 0 0;
+      font-size: 0.95rem;
+      color: #666;
+    }
   </style>
 </head>
 <body>
 
-  <!-- พื้นหลังเคลื่อนไหว -->
+  <!-- พื้นหลังเคลื่อนไหวแบบวัดไทยและต้นโพธิ์ -->
   <div class="bg-animated"></div>
   <div class="bg-overlay"></div>
 
@@ -305,7 +361,6 @@
 
       <div class="marquee-container">
         <div class="marquee-content" id="vowList">
-          <!-- ข้อมูลจำลอง (Mockup) สำหรับโหลดครั้งแรก -->
           <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณสมชาย : <span>"เพื่อสุขภาพที่แข็งแรง"</span></div>
           <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณสมหญิง : <span>"เป็นแบบอย่างที่ดีให้นักเรียน"</span></div>
           <div class="vow-item"><i class="fa-solid fa-seedling"></i> คุณมานะ : <span>"ลดค่าใช้จ่ายในครอบครัว"</span></div>
@@ -351,19 +406,33 @@
             </select>
           </div>
           <div class="form-group">
-            <label>เบอร์โทรศัพท์มือถือ <span class="required-star">*</span></label>
+            <label>เบอร์โทรศัพท์มือถือ (ใช้สืบค้นเกียรติบัตร) <span class="required-star">*</span></label>
             <input type="tel" class="form-control" name="phone" placeholder="เช่น 0891234567" pattern="[0-9]{10}" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ประเภทหน่วยงาน / สังกัด <span class="required-star">*</span></label>
+          <div class="affiliation-box">
+            <label class="radio-label">
+              <input type="radio" name="affiliationType" value="สพป.สุรินทร์ เขต 3" required> 
+              อยู่ในสังกัด สพป.สุรินทร์ เขต 3
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="affiliationType" value="สังกัดอื่น/บุคคลทั่วไป" required> 
+              สังกัดอื่น ๆ / บุคคลทั่วไป
+            </label>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="form-group">
             <label>ตำแหน่ง <span class="required-star">*</span></label>
-            <input type="text" class="form-control" name="position" placeholder="เช่น ครู, นิติกร, บุคคลทั่วไป" required>
+            <input type="text" class="form-control" name="position" placeholder="เช่น ครู, นิติกร, พนักงานราชการ" required>
           </div>
           <div class="form-group">
-            <label>สังกัด / โรงเรียน / หน่วยงาน <span class="required-star">*</span></label>
-            <input type="text" class="form-control" name="organization" placeholder="ชื่อหน่วยงานที่สังกัด" required>
+            <label>ระบุชื่อ โรงเรียน / หน่วยงาน <span class="required-star">*</span></label>
+            <input type="text" class="form-control" name="organization" placeholder="เช่น โรงเรียนบ้านช้าง, ธุรกิจส่วนตัว" required>
           </div>
         </div>
 
@@ -439,6 +508,17 @@
     </div>
   </div>
 
+  <!-- ส่วน Footer (ช่องทางการติดต่อ) -->
+  <footer class="site-footer">
+    <p style="margin-bottom: 12px; color: #555;">ติดต่อสอบถามเพิ่มเติมได้ที่</p>
+    <!-- สามารถนำลิงก์เพจจริงมาวางแทนเครื่องหมาย # ได้เลยครับ -->
+    <a href="#" target="_blank" class="facebook-link">
+      <i class="fa-brands fa-facebook" style="font-size: 1.5rem;"></i>
+      กลุ่มกฎหมายและคดี สพป.สร.3
+    </a>
+    <p>© 2569 กิจกรรมทำความดีด้วยหัวใจ บวชจิตบวชใจ "งดเหล้าเข้าพรรษา" ประจำปีที่ 5</p>
+  </footer>
+
   <!-- นำเข้า Flatpickr JS และภาษาไทย -->
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="https://npmcdn.com/flatpickr/dist/l10n/th.js"></script>
@@ -450,7 +530,7 @@
     // ==========================================
     // 1. ใส่ URL ของ Web App ที่ได้จาก Google Apps Script ที่นี่ (สำคัญมาก)
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
+    const SCRIPT_URL = 'ใส่_URL_WEB_APP_ของคุณที่นี่'; 
 
     // ==========================================
     // 2. เอฟเฟกต์ใบโพธิ์ร่วงหล่นแบบสุ่ม
@@ -498,8 +578,8 @@
     // 4. ฟังก์ชันดึงข้อมูลสถิติและข้อความวิ่ง
     // ==========================================
     async function fetchStats() {
-      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
-         animateValue("counter", 0, 15, 2000); // วิ่งเลขจำลองหากยังไม่ใส่ URL
+      if(SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec') {
+         animateValue("counter", 0, 15, 2000); 
          return;
       }
 
@@ -600,18 +680,19 @@
         Swal.fire({
           icon: 'warning',
           title: 'ยังไม่ได้เชื่อมต่อระบบ',
-          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 373) ก่อนใช้งานจริงครับ'
+          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 412) ก่อนใช้งานจริงครับ'
         });
         return;
       }
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังบันทึกข้อมูลและสร้างเกียรติบัตร...';
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังตรวจสอบข้อมูลและสร้างเกียรติบัตร...';
 
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
       
+      data.organization = `[${data.affiliationType}] ${data.organization}`;
       data.duration = `${data.duration} (เริ่ม: ${data.startDate})`;
 
       try {
@@ -623,6 +704,7 @@
         
         const result = await response.json();
         
+        // เมื่อบันทึกสำเร็จ
         if(result.status === "success") {
           Swal.fire({
             icon: 'success',
@@ -641,6 +723,17 @@
 
           this.reset(); 
           fetchStats(); 
+          
+        // แจ้งเตือนเมื่อเจอเบอร์โทรศัพท์ซ้ำซ้อน (Anti-Spam)
+        } else if (result.status === "duplicate") {
+          Swal.fire({
+            icon: 'warning',
+            title: 'พบข้อมูลซ้ำในระบบ',
+            text: result.message, // "เบอร์โทรศัพท์นี้ลงทะเบียนไปแล้ว..."
+            confirmButtonText: 'รับทราบ',
+            confirmButtonColor: '#f57c00'
+          });
+          
         } else {
           throw new Error(result.message);
         }
