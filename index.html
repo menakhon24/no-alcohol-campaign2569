@@ -508,11 +508,10 @@
     </div>
   </div>
 
-  <!-- ส่วน Footer (ช่องทางการติดต่อ) -->
+  <!-- ส่วน Footer (ช่องทางการติดต่อ เชื่อมลิงก์ Facebook) -->
   <footer class="site-footer">
     <p style="margin-bottom: 12px; color: #555;">ติดต่อสอบถามเพิ่มเติมได้ที่</p>
-    <!-- สามารถนำลิงก์เพจจริงมาวางแทนเครื่องหมาย # ได้เลยครับ -->
-    <a href="#" target="_blank" class="facebook-link">
+    <a href="https://www.facebook.com/law.surin3" target="_blank" class="facebook-link">
       <i class="fa-brands fa-facebook" style="font-size: 1.5rem;"></i>
       กลุ่มกฎหมายและคดี สพป.สร.3
     </a>
@@ -528,9 +527,10 @@
 
   <script>
     // ==========================================
-    // 1. ใส่ URL ของ Web App ที่ได้จาก Google Apps Script ที่นี่ (สำคัญมาก)
+    // 1. นำ URL ของ Web App ที่ได้จาก Google Apps Script มาใส่ในเครื่องหมายคำพูดเดี่ยวด้านล่างนี้
+    // (ตัวอย่าง: const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycb.../exec';)
     // ==========================================
-    const SCRIPT_URL = 'ใส่_URL_WEB_APP_ของคุณที่นี่'; 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
 
     // ==========================================
     // 2. เอฟเฟกต์ใบโพธิ์ร่วงหล่นแบบสุ่ม
@@ -578,7 +578,7 @@
     // 4. ฟังก์ชันดึงข้อมูลสถิติและข้อความวิ่ง
     // ==========================================
     async function fetchStats() {
-      if(SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec') {
+      if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
          animateValue("counter", 0, 15, 2000); 
          return;
       }
@@ -628,7 +628,7 @@
     // ==========================================
     async function searchCertificate() {
       if(SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
-        Swal.fire('ยังไม่ได้เชื่อมต่อระบบ', 'กรุณานำ URL ของ Web App มาใส่ในโค้ดก่อนครับ', 'warning');
+        Swal.fire('ยังไม่ได้เชื่อมต่อระบบ', 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 428) ก่อนครับ', 'warning');
         return;
       }
 
@@ -680,7 +680,7 @@
         Swal.fire({
           icon: 'warning',
           title: 'ยังไม่ได้เชื่อมต่อระบบ',
-          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 412) ก่อนใช้งานจริงครับ'
+          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 428) ก่อนใช้งานจริงครับ'
         });
         return;
       }
@@ -729,7 +729,7 @@
           Swal.fire({
             icon: 'warning',
             title: 'พบข้อมูลซ้ำในระบบ',
-            text: result.message, // "เบอร์โทรศัพท์นี้ลงทะเบียนไปแล้ว..."
+            text: result.message,
             confirmButtonText: 'รับทราบ',
             confirmButtonColor: '#f57c00'
           });
