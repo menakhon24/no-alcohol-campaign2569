@@ -24,10 +24,8 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      /* เอา display: none; ออกจากตรงนี้ เพื่อให้ Popup ทำงานได้ */
     }
 
-    /* ซ่อนเนื้อหาทั้งหมดแทน จนกว่าจะล็อกอินผ่าน */
     #mainContent {
       display: none; 
     }
@@ -50,6 +48,7 @@
 
     .container { padding: 30px; max-width: 1400px; margin: 0 auto; }
 
+    /* ปรับ Grid ให้รองรับ 3 คอลัมน์ สำหรับ 6 กราฟ */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -98,7 +97,6 @@
 </head>
 <body>
 
-  <!-- นำเนื้อหาทั้งหมดมาใส่ใน div นี้เพื่อซ่อน/แสดง -->
   <div id="mainContent">
     <div class="navbar">
       <h1><i class="fa-solid fa-shield-halved"></i> ระบบจัดการหลังบ้าน - งดเหล้าเข้าพรรษา 2569</h1>
@@ -110,7 +108,13 @@
 
     <div class="container">
       
+      <!-- ส่วนแสดงกราฟ 6 อย่าง -->
       <div class="dashboard-grid">
+        <!-- แถวที่ 1 -->
+        <div class="card">
+          <div class="card-title">สถิติการลงทะเบียนรายวัน</div>
+          <div class="chart-container"><canvas id="dailyChart"></canvas></div>
+        </div>
         <div class="card">
           <div class="card-title">สัดส่วนผู้เข้าร่วม (เพศ)</div>
           <div class="chart-container"><canvas id="genderChart"></canvas></div>
@@ -118,6 +122,16 @@
         <div class="card">
           <div class="card-title">ประเภทหน่วยงาน / สังกัด</div>
           <div class="chart-container"><canvas id="orgChart"></canvas></div>
+        </div>
+        
+        <!-- แถวที่ 2 -->
+        <div class="card">
+          <div class="card-title">ระยะเวลาที่ประสงค์จะงดเหล้า</div>
+          <div class="chart-container"><canvas id="durationChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">สถิติตำแหน่งผู้เข้าร่วม</div>
+          <div class="chart-container"><canvas id="positionChart"></canvas></div>
         </div>
         <div class="card">
           <div class="card-title">ความพึงพอใจต่อระบบ</div>
@@ -156,7 +170,7 @@
 
   <script>
     // ==========================================
-    // 1. URL ของ Web App 
+    // 1. นำ URL ของ Web App ตัวเดียวกับหน้า index.html มาใส่ตรงนี้
     // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
 
@@ -195,7 +209,6 @@
             adminPin = pin;
             globalData = result.data; 
             
-            // แสดงหน้าเว็บหลักเมื่อล็อกอินผ่าน
             document.getElementById('mainContent').style.display = 'block'; 
             Swal.close();
             
@@ -212,25 +225,54 @@
 
     function logout() {
       adminPin = "";
-      // ซ่อนหน้าเว็บเมื่อล็อกเอาท์
       document.getElementById('mainContent').style.display = 'none'; 
       authenticate();
     }
 
     function renderDashboard() {
+      // เตรียมตัวแปรสำหรับเก็บข้อมูลสรุป
       let genderCount = { "ชาย": 0, "หญิง": 0, "ไม่ระบุ": 0 };
       let orgCount = { "สพป.สร.3": 0, "อื่นๆ": 0 };
       let satCount = { "มากที่สุด": 0, "มาก": 0, "ปานกลาง": 0, "น้อย": 0 };
+      let dailyCount = {};
+      let positionCount = {};
+      let durationCount = {};
 
       globalData.forEach(item => {
+        // 1. เพศ
         if (genderCount[item.gender] !== undefined) genderCount[item.gender]++;
         else genderCount["ไม่ระบุ"]++;
 
+        // 2. สังกัด
         if (String(item.organization).includes("[สพป.สุรินทร์ เขต 3]")) orgCount["สพป.สร.3"]++;
         else orgCount["อื่นๆ"]++;
 
+        // 3. ความพึงพอใจ
         if (satCount[item.satisfaction] !== undefined) satCount[item.satisfaction]++;
+
+        // 4. สถิติรายวัน (ตัดเอาเฉพาะวันที่จาก Timestamp)
+        let dateObj = new Date(item.timestamp);
+        if (!isNaN(dateObj.getTime())) {
+          let dateStr = dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
+          dailyCount[dateStr] = (dailyCount[dateStr] || 0) + 1;
+        }
+
+        // 5. ตำแหน่ง
+        let pos = String(item.position || "ไม่ระบุ").trim();
+        positionCount[pos] = (positionCount[pos] || 0) + 1;
+
+        // 6. ระยะเวลาที่งด (ตัดส่วนข้อความ "(เริ่ม: ...)" ออก)
+        let dur = String(item.duration || "ไม่ระบุ").split('(')[0].trim();
+        durationCount[dur] = (durationCount[dur] || 0) + 1;
       });
+
+      // ฟังก์ชันสำหรับจัดเรียงและตัดเอาเฉพาะข้อมูลที่มีคนตอบเยอะที่สุด (Top 5)
+      const getTopData = (dataObj, limit = 5) => {
+        let sorted = Object.entries(dataObj).sort((a, b) => b[1] - a[1]).slice(0, limit);
+        let labels = sorted.map(item => item[0]);
+        let data = sorted.map(item => item[1]);
+        return { labels, data };
+      };
 
       const drawChart = (ctxId, type, labels, dataArr, colors) => {
         if(charts[ctxId]) charts[ctxId].destroy(); 
@@ -243,13 +285,37 @@
           },
           options: {
             responsive: true, maintainAspectRatio: false,
-            plugins: { legend: { position: 'bottom', labels: { font: { family: 'Sarabun' } } } }
+            plugins: { legend: { position: type === 'pie' || type === 'doughnut' ? 'bottom' : 'none', labels: { font: { family: 'Sarabun' } } } },
+            scales: type === 'bar' || type === 'line' ? { y: { beginAtZero: true, ticks: { precision: 0, font: { family: 'Sarabun' } } }, x: { ticks: { font: { family: 'Sarabun' } } } } : {}
           }
         });
       };
 
+      // วาดกราฟ 1: สถิติรายวัน (Line Chart)
+      let dailyLabels = Object.keys(dailyCount);
+      let dailyData = Object.values(dailyCount);
+      drawChart('dailyChart', 'line', dailyLabels, dailyData, '#e74c3c');
+
+      // วาดกราฟ 2: เพศ
       drawChart('genderChart', 'pie', ['ชาย', 'หญิง', 'ไม่ระบุ'], [genderCount['ชาย'], genderCount['หญิง'], genderCount['ไม่ระบุ']], ['#3498db', '#e74c3c', '#bdc3c7']);
+      
+      // วาดกราฟ 3: สังกัด
       drawChart('orgChart', 'doughnut', ['สพป.สุรินทร์ เขต 3', 'หน่วยงานอื่นๆ'], [orgCount['สพป.สร.3'], orgCount['อื่นๆ']], ['#2ecc71', '#f1c40f']);
+      
+      // วาดกราฟ 4: ระยะเวลาที่งด (Bar Chart)
+      let topDuration = getTopData(durationCount);
+      drawChart('durationChart', 'bar', topDuration.labels, topDuration.data, ['#9b59b6', '#8e44ad', '#2980b9', '#16a085', '#27ae60']);
+      
+      // วาดกราฟ 5: ตำแหน่ง (Bar Chart - แนวนอน)
+      let topPosition = getTopData(positionCount);
+      if(charts['positionChart']) charts['positionChart'].destroy(); 
+      charts['positionChart'] = new Chart(document.getElementById('positionChart').getContext('2d'), {
+        type: 'bar',
+        data: { labels: topPosition.labels, datasets: [{ data: topPosition.data, backgroundColor: ['#f39c12', '#e67e22', '#d35400', '#c0392b', '#bdc3c7'] }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }
+      });
+
+      // วาดกราฟ 6: ความพึงพอใจ
       drawChart('satChart', 'bar', ['มากที่สุด', 'มาก', 'ปานกลาง', 'น้อย'], [satCount['มากที่สุด'], satCount['มาก'], satCount['ปานกลาง'], satCount['น้อย']], ['#9b59b6', '#3498db', '#f1c40f', '#e74c3c']);
     }
 
@@ -263,6 +329,7 @@
           : `<span class="badge badge-out">อื่นๆ</span>`;
           
         const cleanOrg = String(item.organization).replace(/\[.*?\]\s*/g, '');
+        const cleanDuration = String(item.duration).split('(')[0];
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -271,7 +338,7 @@
           <td>${item.phone}</td>
           <td>${item.position}</td>
           <td>${orgBadge} ${cleanOrg}</td>
-          <td>${String(item.duration).split('(')[0]}</td>
+          <td>${cleanDuration}</td>
           <td><button class="btn-edit" onclick="editRow(${index})"><i class="fa-solid fa-pen"></i> แก้ไข</button></td>
         `;
         tbody.appendChild(tr);
