@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-  <style>
+<style>
     :root {
       --primary-color: #f57c00; 
       --secondary-color: #ffb74d;
@@ -80,44 +80,46 @@
       background: linear-gradient(135deg, rgba(245, 124, 0, 0.95) 0%, rgba(255, 152, 0, 0.95) 100%);
       color: white;
       text-align: center;
-      padding: 50px 20px 60px;
+      padding: 40px 15px 50px;
       border-bottom-left-radius: 30px;
       border-bottom-right-radius: 30px;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
       position: relative;
       z-index: 10;
     }
-    .header-banner h1 { margin: 0; font-size: 2.2rem; font-weight: 700; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
-    .header-banner p { margin-top: 15px; font-size: 1.2rem; opacity: 0.95; line-height: 1.5; }
+    .header-banner h1 { margin: 0; font-size: 1.8rem; font-weight: 700; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); }
+    .header-banner p { margin-top: 15px; font-size: 1rem; opacity: 0.95; line-height: 1.5; }
 
     .container {
       max-width: 850px;
-      margin: -40px auto 50px;
-      padding: 0 20px;
+      margin: -30px auto 40px;
+      padding: 0 15px;
       position: relative;
       z-index: 10;
       flex: 1;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .dashboard {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
-      padding: 35px;
+      padding: 25px 20px;
       text-align: center;
       box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
     
-    .action-buttons { margin-bottom: 25px; }
+    .action-buttons { margin-bottom: 20px; }
     
     .btn-search {
-      padding: 10px 25px;
+      padding: 10px 20px;
       background: white;
       color: var(--primary-color);
       border: 2px solid var(--primary-color);
       border-radius: 30px;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: bold;
       cursor: pointer;
       font-family: 'Sarabun', sans-serif;
@@ -126,27 +128,28 @@
     }
     .btn-search:hover { background: var(--primary-color); color: white; transform: translateY(-2px); }
 
-    .stats-title { font-size: 1.3rem; color: #666; font-weight: 600; }
+    .stats-title { font-size: 1.1rem; color: #666; font-weight: 600; }
     .stats-number { 
-      font-size: 5rem; 
+      font-size: 4rem; 
       font-weight: 700; 
       color: var(--primary-color); 
       line-height: 1; 
-      margin: 15px 0; 
+      margin: 10px 0; 
       text-shadow: 2px 2px 0px #ffe0b2;
     }
-    .stats-unit { font-size: 1.2rem; color: #888; }
+    .stats-unit { font-size: 1.1rem; color: #888; }
 
     .marquee-container {
       width: 100%;
       overflow: hidden;
       background: #fff3e0;
-      padding: 15px 0;
+      padding: 12px 0;
       border-radius: 50px;
-      margin-top: 25px;
+      margin-top: 20px;
       border: 1px solid #ffe0b2;
       box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
       display: block;
+      box-sizing: border-box;
     }
     .marquee-content {
       display: flex;
@@ -154,17 +157,17 @@
       white-space: nowrap;
     }
     .vow-item {
-      margin-right: 30px;
-      padding: 8px 25px;
+      margin-right: 25px;
+      padding: 6px 20px;
       background: white;
       border-radius: 30px;
       color: #e65100;
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1rem;
       box-shadow: 0 2px 8px rgba(230, 81, 0, 0.1);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .vow-item span { color: #555; font-weight: 400; }
     @keyframes scroll-left {
@@ -176,25 +179,30 @@
     .form-container {
       background: rgba(255, 255, 255, 0.95);
       border-radius: 20px;
-      padding: 40px;
+      padding: 25px 20px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.08);
       border: 1px solid rgba(255, 255, 255, 0.5);
     }
     .form-header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
-    .form-header h2 { color: var(--primary-color); margin: 0 0 10px 0; font-size: 1.8rem; }
-    .form-header p { color: #777; margin: 0; }
+    .form-header h2 { color: var(--primary-color); margin: 0 0 8px 0; font-size: 1.5rem; }
+    .form-header p { color: #777; margin: 0; font-size: 0.95rem; }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    @media (max-width: 650px) { .grid-2 { grid-template-columns: 1fr; } }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    @media (max-width: 768px) { 
+      .grid-2 { grid-template-columns: 1fr; gap: 0px; } 
+      .header-banner h1 { font-size: 1.5rem; }
+      .header-banner p { font-size: 0.95rem; }
+      .form-container { padding: 20px 15px; }
+    }
     
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #444; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #444; font-size: 0.95rem; }
     .form-control {
       width: 100%;
-      padding: 14px;
+      padding: 12px 14px;
       border: 1px solid #ddd;
       border-radius: 10px;
       font-size: 1rem;
@@ -209,30 +217,30 @@
       outline: none; 
       box-shadow: 0 0 0 3px rgba(245, 124, 0, 0.1); 
     }
-    textarea.form-control { resize: vertical; min-height: 100px; }
+    textarea.form-control { resize: vertical; min-height: 90px; }
 
     .affiliation-box {
       background-color: #fff9f0;
       border: 2px solid #ffcc80;
       border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 15px;
+      margin-bottom: 15px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
     .radio-label {
       display: flex;
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
       color: #333;
     }
     .radio-label input[type="radio"] {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       accent-color: var(--primary-color);
       cursor: pointer;
     }
@@ -241,11 +249,11 @@
       background-color: #fafafa;
       border: 1px solid #e0e0e0;
       border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 25px;
+      padding: 15px;
+      margin-bottom: 20px;
       display: flex;
       align-items: flex-start;
-      gap: 15px;
+      gap: 12px;
     }
     .pdpa-section input[type="checkbox"] {
       margin-top: 4px;
@@ -253,29 +261,30 @@
       height: 20px;
       accent-color: var(--primary-color);
       cursor: pointer;
+      flex-shrink: 0;
     }
     .pdpa-text {
-      font-size: 0.95rem;
+      font-size: 0.88rem;
       color: #555;
-      line-height: 1.6;
+      line-height: 1.5;
       cursor: pointer;
     }
     .pdpa-text b { color: #d84315; }
     
     .btn-submit {
       width: 100%;
-      padding: 16px;
+      padding: 14px;
       background: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
       color: white;
       border: none;
       border-radius: 10px;
-      font-size: 1.3rem;
+      font-size: 1.15rem;
       font-weight: bold;
       cursor: pointer;
       font-family: 'Sarabun', sans-serif;
       transition: transform 0.2s, box-shadow 0.2s;
       box-shadow: 0 4px 15px rgba(230, 81, 0, 0.3);
-      margin-top: 10px;
+      margin-top: 5px;
     }
     .btn-submit:hover { 
       transform: translateY(-2px); 
@@ -287,7 +296,7 @@
 
     .site-footer {
       text-align: center;
-      padding: 25px 20px;
+      padding: 20px 15px;
       background: rgba(255, 255, 255, 0.95);
       border-top: 3px solid var(--primary-color);
       position: relative;
@@ -297,12 +306,12 @@
     .site-footer a.facebook-link {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       color: #1877F2; 
       text-decoration: none;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      padding: 10px 25px;
+      padding: 8px 20px;
       border-radius: 30px;
       background-color: #f0f2f5;
       transition: all 0.3s;
@@ -312,8 +321,8 @@
       transform: translateY(-2px);
     }
     .site-footer p {
-      margin: 15px 0 0 0;
-      font-size: 0.95rem;
+      margin: 12px 0 0 0;
+      font-size: 0.9rem;
       color: #666;
     }
   </style>
