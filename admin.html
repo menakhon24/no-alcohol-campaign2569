@@ -24,7 +24,12 @@
       color: var(--text);
       margin: 0;
       padding: 0;
-      display: none;
+      /* เอา display: none; ออกจากตรงนี้ เพื่อให้ Popup ทำงานได้ */
+    }
+
+    /* ซ่อนเนื้อหาทั้งหมดแทน จนกว่าจะล็อกอินผ่าน */
+    #mainContent {
+      display: none; 
     }
 
     .navbar {
@@ -93,63 +98,65 @@
 </head>
 <body>
 
-  <div class="navbar">
-    <h1><i class="fa-solid fa-shield-halved"></i> ระบบจัดการหลังบ้าน - งดเหล้าเข้าพรรษา 2569</h1>
-    <div class="navbar-right">
-      <span>Admin สพป.สร.3</span>
-      <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
-    </div>
-  </div>
-
-  <div class="container">
-    
-    <div class="dashboard-grid">
-      <div class="card">
-        <div class="card-title">สัดส่วนผู้เข้าร่วม (เพศ)</div>
-        <div class="chart-container"><canvas id="genderChart"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">ประเภทหน่วยงาน / สังกัด</div>
-        <div class="chart-container"><canvas id="orgChart"></canvas></div>
-      </div>
-      <div class="card">
-        <div class="card-title">ความพึงพอใจต่อระบบ</div>
-        <div class="chart-container"><canvas id="satChart"></canvas></div>
+  <!-- นำเนื้อหาทั้งหมดมาใส่ใน div นี้เพื่อซ่อน/แสดง -->
+  <div id="mainContent">
+    <div class="navbar">
+      <h1><i class="fa-solid fa-shield-halved"></i> ระบบจัดการหลังบ้าน - งดเหล้าเข้าพรรษา 2569</h1>
+      <div class="navbar-right">
+        <span>Admin สพป.สร.3</span>
+        <button class="btn-logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
       </div>
     </div>
 
-    <div class="table-container">
-      <div class="table-header">
-        <h2 style="margin: 0; color: var(--primary);">รายชื่อผู้ตั้งสัจจะอธิษฐาน</h2>
-        <input type="text" id="searchInput" class="search-input" placeholder="ค้นหา ชื่อ, เบอร์โทร หรือ โรงเรียน..." onkeyup="filterTable()">
-      </div>
+    <div class="container">
       
-      <div style="overflow-x: auto;">
-        <table id="dataTable">
-          <thead>
-            <tr>
-              <th>เลขที่เกียรติบัตร</th>
-              <th>ชื่อ - สกุล</th>
-              <th>เบอร์โทรศัพท์</th>
-              <th>ตำแหน่ง</th>
-              <th>สังกัด/หน่วยงาน</th>
-              <th>ระยะเวลาที่งด</th>
-              <th>จัดการ</th>
-            </tr>
-          </thead>
-          <tbody id="tableBody">
-          </tbody>
-        </table>
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">สัดส่วนผู้เข้าร่วม (เพศ)</div>
+          <div class="chart-container"><canvas id="genderChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">ประเภทหน่วยงาน / สังกัด</div>
+          <div class="chart-container"><canvas id="orgChart"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">ความพึงพอใจต่อระบบ</div>
+          <div class="chart-container"><canvas id="satChart"></canvas></div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <div class="table-header">
+          <h2 style="margin: 0; color: var(--primary);">รายชื่อผู้ตั้งสัจจะอธิษฐาน</h2>
+          <input type="text" id="searchInput" class="search-input" placeholder="ค้นหา ชื่อ, เบอร์โทร หรือ โรงเรียน..." onkeyup="filterTable()">
+        </div>
+        
+        <div style="overflow-x: auto;">
+          <table id="dataTable">
+            <thead>
+              <tr>
+                <th>เลขที่เกียรติบัตร</th>
+                <th>ชื่อ - สกุล</th>
+                <th>เบอร์โทรศัพท์</th>
+                <th>ตำแหน่ง</th>
+                <th>สังกัด/หน่วยงาน</th>
+                <th>ระยะเวลาที่งด</th>
+                <th>จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     // ==========================================
-    // 1. นำ URL ของ Web App ตัวเดียวกับหน้า index.html มาใส่ตรงนี้
+    // 1. URL ของ Web App 
     // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec'; 
 
@@ -187,7 +194,9 @@
           if (result.status === "success") {
             adminPin = pin;
             globalData = result.data; 
-            document.body.style.display = 'block'; 
+            
+            // แสดงหน้าเว็บหลักเมื่อล็อกอินผ่าน
+            document.getElementById('mainContent').style.display = 'block'; 
             Swal.close();
             
             renderDashboard();
@@ -203,7 +212,8 @@
 
     function logout() {
       adminPin = "";
-      document.body.style.display = 'none';
+      // ซ่อนหน้าเว็บเมื่อล็อกเอาท์
+      document.getElementById('mainContent').style.display = 'none'; 
       authenticate();
     }
 
