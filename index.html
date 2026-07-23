@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-<style>
+  <style>
     :root {
       --primary-color: #f57c00; 
       --secondary-color: #ffb74d;
@@ -370,14 +370,17 @@
         <div class="grid-2">
           <div class="form-group">
             <label>คำนำหน้าชื่อ <span class="required-star">*</span></label>
-            <select class="form-control" name="prefix" required>
+            <select class="form-control" name="prefix" id="prefixSelect" onchange="checkPrefix(this)" required>
               <option value="" disabled selected>เลือก...</option>
               <option value="นาย">นาย</option>
               <option value="นาง">นาง</option>
               <option value="นางสาว">นางสาว</option>
               <option value="ว่าที่ ร.ต.">ว่าที่ ร.ต.</option>
               <option value="ว่าที่ ร.ต.หญิง">ว่าที่ ร.ต.หญิง</option>
+              <option value="อื่นๆ">อื่นๆ (ระบุ)</option>
             </select>
+            <!-- ช่องกรอกเพิ่มเติม จะถูกซ่อนไว้จนกว่าจะเลือก "อื่นๆ" -->
+            <input type="text" class="form-control" name="otherPrefix" id="otherPrefixInput" placeholder="ระบุคำนำหน้าชื่อ" style="display: none; margin-top: 10px;">
           </div>
           <div class="form-group">
             <label>ชื่อ - นามสกุล <span class="required-star">*</span></label>
@@ -601,8 +604,21 @@
       fetchStats();
     };
 
+    // ฟังก์ชันสำหรับเปิด/ปิดช่องกรอกคำนำหน้าอื่นๆ
+    function checkPrefix(selectObj) {
+      const otherInput = document.getElementById('otherPrefixInput');
+      if (selectObj.value === 'อื่นๆ') {
+        otherInput.style.display = 'block';
+        otherInput.required = true;
+      } else {
+        otherInput.style.display = 'none';
+        otherInput.required = false;
+        otherInput.value = '';
+      }
+    }
+
     async function searchCertificate() {
-      if(!SCRIPT_URL || SCRIPT_URL === 'ใส่_URL_WEB_APP_ของคุณที่นี่') {
+      if(!SCRIPT_URL || SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbw-8KNUUoPBnfLTo1sgPGYOg9w_QRgnlZzpVSvVLGeE5w5v-5ZyKCG87pfxH2HO6jRz/exec') {
         Swal.fire('ยังไม่ได้เชื่อมต่อระบบ', 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 428) ก่อนครับ', 'warning');
         return;
       }
@@ -652,7 +668,7 @@
         Swal.fire({
           icon: 'warning',
           title: 'ยังไม่ได้เชื่อมต่อระบบ',
-          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ด (บรรทัดที่ 428) ก่อนใช้งานจริงครับ'
+          text: 'กรุณานำ URL ของ Web App มาใส่ในโค้ดก่อนใช้งานจริงครับ'
         });
         return;
       }
@@ -664,6 +680,12 @@
       const formData = new FormData(this);
       const data = Object.fromEntries(formData.entries());
       
+      // จัดการคำนำหน้ากรณีเลือก "อื่นๆ"
+      if (data.prefix === 'อื่นๆ') {
+        data.prefix = data.otherPrefix;
+      }
+      delete data.otherPrefix; // ลบตัวแปรชั่วคราวออกไม่ให้ส่งเกินไปที่ Apps Script
+
       data.organization = `[${data.affiliationType}] ${data.organization}`;
       data.duration = `${data.duration} (เริ่ม: ${data.startDate})`;
 
@@ -693,6 +715,7 @@
           });
 
           this.reset(); 
+          document.getElementById('otherPrefixInput').style.display = 'none'; // ซ่อนช่องกรอกอื่นๆ กลับเหมือนเดิม
           fetchStats(); 
           
         } else if (result.status === "duplicate") {
