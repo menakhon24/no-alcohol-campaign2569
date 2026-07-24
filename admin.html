@@ -48,7 +48,6 @@
 
     .container { padding: 30px; max-width: 1400px; margin: 0 auto; }
 
-    /* ปรับ Grid ให้รองรับ 3 คอลัมน์ สำหรับ 6 กราฟ */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -63,17 +62,21 @@
     .card-title { font-size: 1.1rem; font-weight: 600; color: #555; margin-bottom: 15px; text-align: center;}
     .chart-container { position: relative; height: 250px; width: 100%; }
 
+    /* สไตล์สำหรับลิสต์สถิติรายวัน */
+    .daily-list-container { max-height: 140px; overflow-y: auto; background: #f9f9f9; border-radius: 8px; padding: 5px; margin-bottom: 10px; border: 1px solid #eee; }
+    .daily-list-item { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid #eaeaea; font-size: 1rem; color: #444; }
+    .daily-list-item:last-child { border-bottom: none; }
+    .daily-list-item b { color: var(--secondary); }
+    
+    /* สไตล์สำหรับกล่องกรองข้อมูล */
+    .filter-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .filter-container select, .filter-container input { flex: 1; min-width: 200px; padding: 10px 15px; border: 1px solid #ccc; border-radius: 5px; font-family: 'Sarabun'; }
+
     .table-container {
       background: white; border-radius: 10px; padding: 20px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     }
-    .table-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
-    }
-    .search-input {
-      padding: 10px 15px; border: 1px solid #ccc; border-radius: 5px; width: 300px;
-      font-family: 'Sarabun';
-    }
+    .table-header { margin-bottom: 20px; }
     
     table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
     th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #eee; }
@@ -86,9 +89,7 @@
     }
     .btn-edit:hover { background: #d68910; }
 
-    .badge {
-      padding: 4px 8px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;
-    }
+    .badge { padding: 4px 8px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
     .badge-in { background-color: #e3f2fd; color: #1976d2; }
     .badge-out { background-color: #fce4ec; color: #c2185b; }
 
@@ -108,13 +109,21 @@
 
     <div class="container">
       
-      <!-- ส่วนแสดงกราฟ 6 อย่าง -->
       <div class="dashboard-grid">
         <!-- แถวที่ 1 -->
         <div class="card">
-          <div class="card-title">สถิติการลงทะเบียนรายวัน</div>
-          <div class="chart-container"><canvas id="dailyChart"></canvas></div>
+          <div class="card-title">สถิติการลงทะเบียน</div>
+          <div id="totalRegistrations" style="font-size: 3.5rem; font-weight: bold; color: var(--primary); text-align: center; line-height: 1;">0</div>
+          <div style="text-align: center; color: #777; font-size: 1rem; margin-bottom: 15px;">ยอดผู้ตั้งสัจจะอธิษฐานรวม (ท่าน)</div>
+          
+          <div class="daily-list-container" id="dailyStatsList">
+            <!-- จะถูกเติมด้วย Javascript -->
+          </div>
+          <div style="font-size: 0.95rem; color: #e74c3c; text-align: center; font-weight: 600;">
+            <i class="fa-solid fa-circle-info"></i> ปิดรับลงทะเบียน 12 ส.ค. 2569
+          </div>
         </div>
+
         <div class="card">
           <div class="card-title">สัดส่วนผู้เข้าร่วม (เพศ)</div>
           <div class="chart-container"><canvas id="genderChart"></canvas></div>
@@ -130,7 +139,7 @@
           <div class="chart-container"><canvas id="durationChart"></canvas></div>
         </div>
         <div class="card">
-          <div class="card-title">สถิติตำแหน่งผู้เข้าร่วม</div>
+          <div class="card-title">สถิติตำแหน่งผู้เข้าร่วม (Top 5)</div>
           <div class="chart-container"><canvas id="positionChart"></canvas></div>
         </div>
         <div class="card">
@@ -142,7 +151,24 @@
       <div class="table-container">
         <div class="table-header">
           <h2 style="margin: 0; color: var(--primary);">รายชื่อผู้ตั้งสัจจะอธิษฐาน</h2>
-          <input type="text" id="searchInput" class="search-input" placeholder="ค้นหา ชื่อ, เบอร์โทร หรือ โรงเรียน..." onkeyup="filterTable()">
+          
+          <!-- ระบบตัวกรองข้อมูล -->
+          <div class="filter-container">
+            <input type="text" id="searchInput" placeholder="พิมพ์ค้นหา ชื่อ-สกุล หรือ เบอร์โทร..." onkeyup="filterTable()">
+            
+            <select id="filterOrg" onchange="filterTable()">
+              <option value="">-- ทุกสังกัด/หน่วยงาน --</option>
+            </select>
+            
+            <select id="filterPosition" onchange="filterTable()">
+              <option value="">-- ทุกตำแหน่ง --</option>
+            </select>
+            
+            <select id="filterDuration" onchange="filterTable()">
+              <option value="">-- ทุกระยะเวลาที่งด --</option>
+            </select>
+          </div>
+
         </div>
         
         <div style="overflow-x: auto;">
@@ -230,43 +256,83 @@
     }
 
     function renderDashboard() {
-      // เตรียมตัวแปรสำหรับเก็บข้อมูลสรุป
       let genderCount = { "ชาย": 0, "หญิง": 0, "ไม่ระบุ": 0 };
       let orgCount = { "สพป.สร.3": 0, "อื่นๆ": 0 };
       let satCount = { "มากที่สุด": 0, "มาก": 0, "ปานกลาง": 0, "น้อย": 0 };
-      let dailyCount = {};
+      
       let positionCount = {};
       let durationCount = {};
+      let dailyMap = {};
+      
+      // ชุดข้อมูลสำหรับตัวกรอง
+      let orgSet = new Set();
+      let posSet = new Set();
+      let durSet = new Set();
 
       globalData.forEach(item => {
         // 1. เพศ
         if (genderCount[item.gender] !== undefined) genderCount[item.gender]++;
         else genderCount["ไม่ระบุ"]++;
 
-        // 2. สังกัด
+        // 2. สังกัด และเก็บตัวเลือกไว้ใน Filter
+        let cleanOrg = String(item.organization).replace(/\[.*?\]\s*/g, '').trim();
+        if (cleanOrg) orgSet.add(cleanOrg);
+        
         if (String(item.organization).includes("[สพป.สุรินทร์ เขต 3]")) orgCount["สพป.สร.3"]++;
         else orgCount["อื่นๆ"]++;
 
         // 3. ความพึงพอใจ
         if (satCount[item.satisfaction] !== undefined) satCount[item.satisfaction]++;
 
-        // 4. สถิติรายวัน (ตัดเอาเฉพาะวันที่จาก Timestamp)
+        // 4. สถิติรายวัน
         let dateObj = new Date(item.timestamp);
         if (!isNaN(dateObj.getTime())) {
-          let dateStr = dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
-          dailyCount[dateStr] = (dailyCount[dateStr] || 0) + 1;
+          dateObj.setHours(0,0,0,0);
+          let timeKey = dateObj.getTime();
+          if(!dailyMap[timeKey]) {
+            dailyMap[timeKey] = {
+              dateStr: dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }),
+              count: 0
+            };
+          }
+          dailyMap[timeKey].count++;
         }
 
         // 5. ตำแหน่ง
         let pos = String(item.position || "ไม่ระบุ").trim();
+        if (pos && pos !== "ไม่ระบุ") posSet.add(pos);
         positionCount[pos] = (positionCount[pos] || 0) + 1;
 
-        // 6. ระยะเวลาที่งด (ตัดส่วนข้อความ "(เริ่ม: ...)" ออก)
+        // 6. ระยะเวลาที่งด
         let dur = String(item.duration || "ไม่ระบุ").split('(')[0].trim();
+        if (dur && dur !== "ไม่ระบุ") durSet.add(dur);
         durationCount[dur] = (durationCount[dur] || 0) + 1;
       });
 
-      // ฟังก์ชันสำหรับจัดเรียงและตัดเอาเฉพาะข้อมูลที่มีคนตอบเยอะที่สุด (Top 5)
+      // อัปเดตตัวเลขรวม
+      document.getElementById('totalRegistrations').innerText = globalData.length;
+
+      // อัปเดตรายการสถิติรายวัน (เรียงจากวันล่าสุดไปวันเก่าสุด)
+      let dailyHtml = "";
+      let sortedKeys = Object.keys(dailyMap).sort((a,b) => b - a);
+      sortedKeys.forEach(k => {
+        dailyHtml += `<div class="daily-list-item"><span>${dailyMap[k].dateStr}</span> <b>${dailyMap[k].count} ท่าน</b></div>`;
+      });
+      document.getElementById('dailyStatsList').innerHTML = dailyHtml || "<div style='text-align:center; color:#999; padding: 10px;'>ยังไม่มีข้อมูล</div>";
+
+      // เติมข้อมูลลงใน Dropdown Filter
+      const populateSelect = (id, setObj) => {
+        const select = document.getElementById(id);
+        select.innerHTML = select.options[0].outerHTML; // เก็บอันแรกไว้ (ทุกๆ...)
+        Array.from(setObj).sort().forEach(val => {
+          select.innerHTML += `<option value="${val}">${val}</option>`;
+        });
+      };
+      populateSelect('filterOrg', orgSet);
+      populateSelect('filterPosition', posSet);
+      populateSelect('filterDuration', durSet);
+
+      // วาดกราฟ
       const getTopData = (dataObj, limit = 5) => {
         let sorted = Object.entries(dataObj).sort((a, b) => b[1] - a[1]).slice(0, limit);
         let labels = sorted.map(item => item[0]);
@@ -279,34 +345,21 @@
         const ctx = document.getElementById(ctxId).getContext('2d');
         charts[ctxId] = new Chart(ctx, {
           type: type,
-          data: {
-            labels: labels,
-            datasets: [{ data: dataArr, backgroundColor: colors, borderWidth: 1 }]
-          },
+          data: { labels: labels, datasets: [{ data: dataArr, backgroundColor: colors, borderWidth: 1 }] },
           options: {
             responsive: true, maintainAspectRatio: false,
             plugins: { legend: { position: type === 'pie' || type === 'doughnut' ? 'bottom' : 'none', labels: { font: { family: 'Sarabun' } } } },
-            scales: type === 'bar' || type === 'line' ? { y: { beginAtZero: true, ticks: { precision: 0, font: { family: 'Sarabun' } } }, x: { ticks: { font: { family: 'Sarabun' } } } } : {}
+            scales: type === 'bar' ? { y: { beginAtZero: true, ticks: { precision: 0, font: { family: 'Sarabun' } } }, x: { ticks: { font: { family: 'Sarabun' } } } } : {}
           }
         });
       };
 
-      // วาดกราฟ 1: สถิติรายวัน (Line Chart)
-      let dailyLabels = Object.keys(dailyCount);
-      let dailyData = Object.values(dailyCount);
-      drawChart('dailyChart', 'line', dailyLabels, dailyData, '#e74c3c');
-
-      // วาดกราฟ 2: เพศ
       drawChart('genderChart', 'pie', ['ชาย', 'หญิง', 'ไม่ระบุ'], [genderCount['ชาย'], genderCount['หญิง'], genderCount['ไม่ระบุ']], ['#3498db', '#e74c3c', '#bdc3c7']);
-      
-      // วาดกราฟ 3: สังกัด
       drawChart('orgChart', 'doughnut', ['สพป.สุรินทร์ เขต 3', 'หน่วยงานอื่นๆ'], [orgCount['สพป.สร.3'], orgCount['อื่นๆ']], ['#2ecc71', '#f1c40f']);
       
-      // วาดกราฟ 4: ระยะเวลาที่งด (Bar Chart)
       let topDuration = getTopData(durationCount);
       drawChart('durationChart', 'bar', topDuration.labels, topDuration.data, ['#9b59b6', '#8e44ad', '#2980b9', '#16a085', '#27ae60']);
       
-      // วาดกราฟ 5: ตำแหน่ง (Bar Chart - แนวนอน)
       let topPosition = getTopData(positionCount);
       if(charts['positionChart']) charts['positionChart'].destroy(); 
       charts['positionChart'] = new Chart(document.getElementById('positionChart').getContext('2d'), {
@@ -315,7 +368,6 @@
         options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } } } }
       });
 
-      // วาดกราฟ 6: ความพึงพอใจ
       drawChart('satChart', 'bar', ['มากที่สุด', 'มาก', 'ปานกลาง', 'น้อย'], [satCount['มากที่สุด'], satCount['มาก'], satCount['ปานกลาง'], satCount['น้อย']], ['#9b59b6', '#3498db', '#f1c40f', '#e74c3c']);
     }
 
@@ -328,8 +380,8 @@
           ? `<span class="badge badge-in">สพป.สร.3</span>` 
           : `<span class="badge badge-out">อื่นๆ</span>`;
           
-        const cleanOrg = String(item.organization).replace(/\[.*?\]\s*/g, '');
-        const cleanDuration = String(item.duration).split('(')[0];
+        const cleanOrg = String(item.organization).replace(/\[.*?\]\s*/g, '').trim();
+        const cleanDuration = String(item.duration).split('(')[0].trim();
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -345,12 +397,38 @@
       });
     }
 
+    // ฟังก์ชันค้นหาและกรองข้อมูลแบบผสม (Text + Dropdown)
     function filterTable() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const filterOrg = document.getElementById('filterOrg').value.toLowerCase();
+      const filterPosition = document.getElementById('filterPosition').value.toLowerCase();
+      const filterDuration = document.getElementById('filterDuration').value.toLowerCase();
+      
       const trs = document.getElementById('tableBody').getElementsByTagName('tr');
+      
       for (let i = 0; i < trs.length; i++) {
         let textVal = trs[i].textContent || trs[i].innerText;
-        trs[i].style.display = textVal.toLowerCase().includes(input) ? "" : "none";
+        
+        let posCell = trs[i].getElementsByTagName('td')[3];
+        let orgCell = trs[i].getElementsByTagName('td')[4];
+        let durCell = trs[i].getElementsByTagName('td')[5];
+        
+        let posText = posCell ? posCell.textContent.toLowerCase() : "";
+        let orgText = orgCell ? orgCell.textContent.toLowerCase() : "";
+        let durText = durCell ? durCell.textContent.toLowerCase() : "";
+
+        // เช็คเงื่อนไขต่างๆ
+        let matchSearch = textVal.toLowerCase().includes(searchInput);
+        let matchOrg = filterOrg === "" || orgText.includes(filterOrg);
+        let matchPos = filterPosition === "" || posText.includes(filterPosition);
+        let matchDur = filterDuration === "" || durText.includes(filterDuration);
+
+        // แสดงผลก็ต่อเมื่อเข้าเงื่อนไขครบทุกตัว (AND logic)
+        if (matchSearch && matchOrg && matchPos && matchDur) {
+          trs[i].style.display = "";
+        } else {
+          trs[i].style.display = "none";
+        }
       }
     }
 
